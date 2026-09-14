@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 290813456}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 330585547}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -507,6 +507,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4356625406475628020, guid: 845d3f8cd93d8504fa6d799d43113b89, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7761816624353501087, guid: 845d3f8cd93d8504fa6d799d43113b89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -546,6 +550,10 @@ PrefabInstance:
     - target: {fileID: 7761816624353501087, guid: 845d3f8cd93d8504fa6d799d43113b89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9220890521208308283, guid: 845d3f8cd93d8504fa6d799d43113b89, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -799,9 +807,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3507140174722801863, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 1158933950}
     - target: {fileID: 3885041511365756307, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
       propertyPath: m_Name
       value: Dropoff_Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948843361333366423, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: m_text
+      value: Press E / Y to Drop Off
       objectReference: {fileID: 0}
     - target: {fileID: 8049778867657981174, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
       propertyPath: m_Camera
