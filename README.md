@@ -136,11 +136,3 @@ Use movement and parkour mechanics to navigate the level efficiently and maximiz
 ## Team
 
 This project is developed as a group assignment.
-  Members are the following:
-  - Amanda Phetnok
-  - Cristian Ingvarsson
-  - Lukas Bråkenhielm
-  - Hampus Svanberg
-  - Ellinor Ribbing
-  - Sebastian Valck
-  - Anton Cederlund
