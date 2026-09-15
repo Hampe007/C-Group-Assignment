@@ -1,0 +1,175 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+public class Inventory : MonoBehaviour
+{
+    /*private static Inventory _instance;
+    private static Inventory Instance {
+        get {
+            if (_instance == null) { _instance = FindFirstObjectByType<Inventory>(); }
+
+            return _instance;
+        }
+    }*/
+
+    public static Inventory Instance { get; private set; }
+
+    [SerializeField] private List<SO_InteractableCollectableData> collectables = new();
+
+    private void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    public SO_InteractableCollectableData GetFirstCollectable() {
+        if (this.collectables.Count > 0)
+            return this.collectables[0];
+        return null;
+    }
+
+    public SO_InteractableCollectableData GetLastCollectable() {
+        if (this.collectables.Count > 0)
+            return this.collectables[^1];
+        return null;
+    }
+
+    public SO_InteractableCollectableData GetCollectableByIndex(int index) {
+        if (this.collectables.Count == 0) { return null; }
+        if (index < 0 || index >= collectables.Count) { return null; }
+        return this.collectables[index];
+    }
+
+    public SO_InteractableCollectableData GetCollectableByName(string collectableName) {
+        if (this.collectables.Count == 0) { return null; }
+        if (string.IsNullOrEmpty(collectableName)) { return null; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetCollectableName() == collectableName) {
+                return data;
+            }
+        }
+        return null;
+    }
+
+    public SO_InteractableCollectableData GetCollectableByID(int collectableID) {
+        if (this.collectables.Count == 0) { return null; }
+        if (collectableID < 0) { return null; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetID() == collectableID) {
+                return data;
+            }
+        }
+        return null;
+    }
+
+    public bool AddCollectable(SO_InteractableCollectableData collectableData) {
+        if (collectableData == null) { return false; }
+        if (collectableData.GetID() < 0) { return false; }
+        this.collectables.Add(collectableData);
+        return true;
+    }
+
+    public bool RemoveFirstCollectable() {
+        if (this.collectables.Count > 0) {
+            this.collectables.RemoveAt(0);
+            return true;
+        }
+        return false;
+    }
+
+    public bool RemoveLastCollectable() {
+        if (this.collectables.Count > 0) {
+            this.collectables.RemoveAt(this.collectables.Count - 1);
+            return true;
+        }
+        return false;
+    }
+
+    public bool RemoveCollectableByIndex(int index) {
+        if (this.collectables.Count == 0) { return false; }
+        if (index < 0 || index >= collectables.Count) { return false; }
+        this.collectables.RemoveAt(index);
+        return true;
+    }
+
+    public bool RemoveCollectableByName(string collectableName) {
+        if (this.collectables.Count == 0) { return false; }
+        if (string.IsNullOrEmpty(collectableName)) { return false; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetCollectableName() == collectableName) {
+                this.collectables.Remove(data);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RemoveCollectableByID(int collectableID) {
+        if (this.collectables.Count == 0) { return false; }
+        if (collectableID < 0) { return false; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetID() == collectableID) {
+                this.collectables.Remove(data);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public SO_InteractableCollectableData RemoveAndGetFirstCollectable() {
+        if (this.collectables.Count > 0) {
+            SO_InteractableCollectableData removedData = this.collectables[0];
+            this.collectables.RemoveAt(0);
+            return removedData;
+        }
+        return null;
+    }
+
+    public SO_InteractableCollectableData RemoveAndGetLastCollectable() {
+        if (this.collectables.Count > 0) {
+            SO_InteractableCollectableData removedData = this.collectables[^1];
+            this.collectables.RemoveAt(this.collectables.Count - 1);
+            return removedData;
+        }
+        return null;
+    }
+
+    public SO_InteractableCollectableData RemoveAndGetCollectableByIndex(int index) {
+        if (this.collectables.Count == 0) { return null; }
+        if (index < 0 || index >= collectables.Count) { return null; }
+        SO_InteractableCollectableData removedData = this.collectables[index];
+        this.collectables.RemoveAt(index);
+        return removedData;
+    }
+
+    public SO_InteractableCollectableData RemoveAndGetCollectableByName(string collectableName) {
+        if (this.collectables.Count == 0) { return null; }
+        if (string.IsNullOrEmpty(collectableName)) { return null; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetCollectableName() == collectableName) {
+                SO_InteractableCollectableData removedData = data;
+                this.collectables.Remove(data);
+                return removedData;
+            }
+        }
+        return null;
+    }
+
+    public SO_InteractableCollectableData RemoveAndGetCollectableByID(int collectableID) {
+        if (this.collectables.Count == 0) { return null; }
+        if (collectableID < 0) { return null; }
+        foreach (SO_InteractableCollectableData data in collectables) {
+            if (data.GetID() == collectableID) {
+                SO_InteractableCollectableData removedData = data;
+                this.collectables.Remove(data);
+                return removedData;
+            }
+        }
+        return null;
+    }
+}
