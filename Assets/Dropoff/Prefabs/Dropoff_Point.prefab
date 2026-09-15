@@ -412,6 +412,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b630e7c8ec804ad49a087cce9b8a04d7, type: 2}
+    - target: {fileID: 135366550370626815, guid: 72a55d1be0b5df14ba16dd493a430d50, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 135366550370626815, guid: 72a55d1be0b5df14ba16dd493a430d50, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 135366550370626815, guid: 72a55d1be0b5df14ba16dd493a430d50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 72a55d1be0b5df14ba16dd493a430d50, type: 3}
       propertyPath: m_Name
       value: Low_Poly_Chest [2.0] FBX
@@ -447,7 +459,7 @@ Animator:
   m_GameObject: {fileID: 6350950425268403857}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 913479e802b142342b9835cfa0a34dd8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

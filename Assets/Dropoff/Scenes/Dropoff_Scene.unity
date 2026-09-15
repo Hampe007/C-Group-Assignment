@@ -819,6 +819,30 @@ PrefabInstance:
       propertyPath: m_text
       value: Press E / Y to Drop Off
       objectReference: {fileID: 0}
+    - target: {fileID: 6054841709664894142, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: m_Pitch
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054841709664894142, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: m_Volume
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054841709664894142, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054841709664894142, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6812567196870546333, guid: d12647af5a99c31488a708a643959a08, type: 2}
+    - target: {fileID: 6054841709664894142, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7674263206363441063, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
+      propertyPath: openSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 755143e81af2e9f48b500e9df326549a, type: 3}
     - target: {fileID: 8049778867657981174, guid: 359a27c95950bcf4986390c460496ad7, type: 3}
       propertyPath: m_Camera
       value: 
