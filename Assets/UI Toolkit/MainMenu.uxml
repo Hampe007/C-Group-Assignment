@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=ade595b3343210b4186d64ecb9c8b9b6&amp;type=3#MainMenuStyle"/>
+    <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; padding-top: 13.5%; padding-bottom: 8.5%;">
+        <ui:VisualElement name="TitleContainer" style="flex-grow: 0; flex-direction: row; font-size: 90px;">
+            <ui:Label text="Parkour"/>
+            <ui:Label text="Game" style="color: rgb(168, 21, 21);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; justify-content: center; width: 341px; height: auto;">
+            <ui:Button text="START" name="StartButton"/>
+            <ui:Button text="QUIT" name="QuitButton"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
