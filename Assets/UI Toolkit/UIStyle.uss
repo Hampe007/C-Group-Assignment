@@ -71,4 +71,5 @@ Button:hover {
     background-color: rgba(0, 0, 0, 0.325);
     background-image: none;
     visibility: hidden;
+    transition-duration: 0.125s;
 }

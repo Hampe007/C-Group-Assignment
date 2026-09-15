@@ -70,6 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LvlOverlayUI
   UIDoc: {fileID: 4349036913200735125}
   mainMenuScene: MainMenuScene
-  timerData:
+  testingData:
     IsTest: 1
     StartTime: 15
+    isGamePaused: 0
+    isGameOver: 0
