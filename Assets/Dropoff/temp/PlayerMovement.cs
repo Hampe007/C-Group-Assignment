@@ -65,8 +65,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnInteract(InputAction.CallbackContext context) {
-        Debug.Log("Pressed E.");
-
         if (interactZone == null) return;
 
         Interactable interactable = interactZone.GetLastInteractable();
