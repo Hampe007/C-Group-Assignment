@@ -48,9 +48,9 @@ public class LvlOverlayUI : MonoBehaviour {
         UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnGameResumed; // TODO: invoke ResumeGame method from public class
 
         // TODO: subscribe UpdateTimerVisual to UnityEvent/class which returns the actual timer
-        // TODO: subscribe OnGamePaused to UnityEvent/game state class
-        // TODO: subscribe OnGameResumed to UnityEvent/game state class
-        // TODO: subscribe OnGameOver to UnityEvent/game state class
+        // TODO: subscribe OnGamePaused to UnityEvent/game state class which tells when the game is paused
+        // TODO: subscribe OnGameResumed to UnityEvent/game state class which tells when the game is resumed/not paused
+        // TODO: subscribe OnGameOver to UnityEvent/game state class which tells when the game is over
     }
 
     void Start()
