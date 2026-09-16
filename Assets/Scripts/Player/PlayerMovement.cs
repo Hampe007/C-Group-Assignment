@@ -6,10 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputActionReference move;
     [SerializeField] private InputActionReference look;
-    [SerializeField] private InputActionReference interact;
+    [SerializeField] private InputActionReference interact; // IMPORTANT! NEEDS TO BE MOVED
     [SerializeField] private Transform cameraTransform;
 
-    PlayerInteractZone interactZone;
+    PlayerInteractZone interactZone; // IMPORTANT! NEEDS TO BE MOVED
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float lookSpeed = 0.1f;
@@ -32,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
         move.action.Enable();
         look.action.Enable();
 
-        interact.action.Enable();
-        interact.action.performed += OnInteract;
+        interact.action.Enable(); // IMPORTANT! NEEDS TO BE MOVED
+        interact.action.performed += OnInteract; // IMPORTANT! NEEDS TO BE MOVED
     }
 
     private void OnDisable()
@@ -41,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
         move.action.Disable();
         look.action.Disable();
 
-        interact.action.Disable();
-        interact.action.performed -= OnInteract;
+        interact.action.Disable(); // IMPORTANT! NEEDS TO BE MOVED
+        interact.action.performed -= OnInteract; // IMPORTANT! NEEDS TO BE MOVED
     }
 
     private void Update()
@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
+    // IMPORTANT! NEEDS TO BE MOVED
+    // THE WHOLE FUNCTION!!!!
     private void OnInteract(InputAction.CallbackContext context) {
         if (interactZone == null) return;
 
