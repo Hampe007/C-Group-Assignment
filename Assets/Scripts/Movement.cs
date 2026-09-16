@@ -41,6 +41,8 @@ public class Movement : MonoBehaviour
     
 
     RaycastHit slopeHit;
+
+    float moveLockTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -159,6 +161,11 @@ public class Movement : MonoBehaviour
     }
     void MovePlayer()
     {
+        if (moveLockTime > 0)
+        {
+            moveLockTime -= Time.deltaTime;
+            return;
+        }
         var forward = transform.forward * moveInput.y;
         var right = transform.right * moveInput.x;
         moveDirection = (forward + right).normalized;
@@ -193,7 +200,9 @@ public class Movement : MonoBehaviour
         }
         else if (IsOnWall())
         {
-            rb.AddForce((finalHit.normal+Vector3.up).normalized*jumpStrength*1.5f,ForceMode.Impulse);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            rb.AddForce((finalHit.normal+(Vector3.up*0.6f)).normalized*jumpStrength*1.5f,ForceMode.Impulse);
+            moveLockTime = 0.4f;
         }
        
     }
