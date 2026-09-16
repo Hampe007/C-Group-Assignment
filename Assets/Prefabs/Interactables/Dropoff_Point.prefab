@@ -216,7 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131343de437beb044aad4b57fbdd3b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropOffChest
-  interactAction: {fileID: 1781555164194001046, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  data: {fileID: 11400000, guid: 506630a86d71d1342a42c803c3dafb13, type: 2}
+  state: 1
   interactionPrompt: {fileID: 2304449518855601653}
   chestAnimator: {fileID: 7674263206363441063}
 --- !u!1 &3981660229716912884

@@ -1,148 +1,90 @@
 using System;
-
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Collider))]
-public class DropOffChest : MonoBehaviour
+public class DropOffChest : Interactable
 {
-    
     [Header("Interaction")]
-    [SerializeField] private InputActionReference interactAction;
     [SerializeField] private GameObject interactionPrompt;
 
     [Header("Chest")]
     [SerializeField] private DropOffChestAnimator chestAnimator;
 
-    private IDropOffProvider dropOffProvider;
     private bool playerInRange;
 
     // Score/game systems can subscribe to this.
-    // Example: dropOffChest.ItemDroppedOff += OnItemDroppedOff;
-    public event Action<GameObject> ItemDroppedOff;
-    
-    private bool CanDropOff() => playerInRange && dropOffProvider != null && dropOffProvider.HasItem();
-    
-    private void Awake()
+    // Example: score can use droppedItem.GetCollectableValue().
+    public event Action<SO_InteractableCollectableData> ItemDroppedOff;
+
+    private bool HasItemToDropOff() => Inventory.Instance != null && Inventory.Instance.GetLastCollectable() != null;
+
+    private bool ShouldShowPrompt() =>
+        playerInRange &&
+        HasItemToDropOff();
+
+    protected override void OnEnable()
     {
+        base.OnEnable();
         SetPromptVisible(false);
-
-        Debug.Log("Initialized and hid the interaction prompt.");
-
-        if (interactAction == null)
-        {
-            Debug.LogWarning($"[{nameof(DropOffChest)}] No interact action is assigned.", this);
-        }
-
-        if (chestAnimator == null)
-        {
-            Debug.LogWarning($"[{nameof(DropOffChest)}] No chest animator is assigned.", this);
-        }
-    } 
-    
-    private void OnEnable()
-    {
-        if (interactAction != null && !interactAction.action.enabled)
-        {
-            interactAction.action.Enable();
-            Debug.Log($"Enabled input action '{interactAction.action.name}'.");
-        }
     }
-    
-    private void Update()
-    {
-        SetPromptVisible(CanDropOff());
 
-        if (CanDropOff() && interactAction != null && interactAction.action.WasPressedThisFrame())
-        {
-            Debug.Log("Interact input received while an item can be dropped off.");
-            DropOff();
-        }
-    }
+    private void Update() => SetPromptVisible(ShouldShowPrompt());
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!IsPlayer(other))
         {
             return;
         }
 
-        dropOffProvider = FindDropOffProvider(other);
-
-        if (dropOffProvider != null)
-        {
-            playerInRange = true;
-            Debug.Log($"Player entered range. Found provider '{dropOffProvider.GetType().Name}'. Has item: {dropOffProvider.HasItem()}.");
-            return;
-        }
-
-        Debug.LogWarning($"[{nameof(DropOffChest)}] Player entered range, but no {nameof(IDropOffProvider)} was found.", other);
+        playerInRange = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!IsPlayer(other))
         {
             return;
         }
 
         playerInRange = false;
-        dropOffProvider = null;
-
         SetPromptVisible(false);
-        Debug.Log("Player left range; cleared the drop-off provider.");
     }
-    
-    private void DropOff()
+
+    public override SO_InteractableData Interact()
     {
-        if (!CanDropOff())
+        if (!HasItemToDropOff())
         {
-            Debug.Log("Drop-off was requested, but its requirements were no longer met.");
-            return;
+            return data;
         }
-        
-        GameObject droppedItem = dropOffProvider.DropOffItem();
+
+        // Removes the most recently collected item from the inventory.
+        SO_InteractableCollectableData droppedItem =
+            Inventory.Instance.RemoveAndGetLastCollectable();
 
         if (droppedItem == null)
         {
-            Debug.LogWarning($"[{nameof(DropOffChest)}] The provider returned no item to drop off.", this);
-            return;
+            return data;
         }
 
-        Debug.Log($"Dropping off '{droppedItem.name}'.");
         chestAnimator?.PlayDepositAnimation();
 
-        // Score/game system is notified here.
+        // Example: score system can subscribe here.
         ItemDroppedOff?.Invoke(droppedItem);
-        Debug.Log($"Notified subscribers and destroyed '{droppedItem.name}'.");
-
-        Destroy(droppedItem);
 
         SetPromptVisible(false);
-    }
-    
-    private static IDropOffProvider FindDropOffProvider(Collider playerCollider)
-    {
-        MonoBehaviour[] behaviours = playerCollider.GetComponentsInParent<MonoBehaviour>();
 
-        foreach (MonoBehaviour behaviour in behaviours)
-        {
-            if (behaviour is IDropOffProvider provider)
-            {
-                return provider;
-            }
-        }
-        
-        return null;
+        return data;
     }
-    
+
+    private bool IsPlayer(Collider other) => other.CompareTag("Player") || other.transform.root.CompareTag("Player");
+
     private void SetPromptVisible(bool visible)
     {
-        if (interactionPrompt != null && interactionPrompt.activeSelf != visible)
+        if (interactionPrompt != null &&
+            interactionPrompt.activeSelf != visible)
         {
             interactionPrompt.SetActive(visible);
-            Debug.Log($"Interaction prompt is now {(visible ? "visible" : "hidden")}.");
         }
     }
-    
 }
