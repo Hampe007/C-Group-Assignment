@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerInteractZone interactZone;
 
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float lookSpeed = 0.1f;
+    [SerializeField] private float lookSpeed = 0.5f;
 
     private CharacterController controller;
     private float pitch;
