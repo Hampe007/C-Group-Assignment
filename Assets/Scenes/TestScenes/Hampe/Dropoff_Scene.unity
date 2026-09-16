@@ -253,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31587d8c711d1054f8c3d7b82735940f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestDropOffProvider
-  carriedItem: {fileID: 0}
 --- !u!4 &313843076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
@@ -715,6 +714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 771764566180621032, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.84249
@@ -754,6 +757,14 @@ PrefabInstance:
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397824748897102576, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397824748897102576, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
