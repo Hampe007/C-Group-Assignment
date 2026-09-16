@@ -15,7 +15,8 @@ public enum InteractionType : byte {
     STATIC_OBSTACLE = 0,
     MOVING_OBSTACLE = 1,
     ORTHOGRAPHIC = 2,
-    ITEM = 3
+    ITEM = 3,
+    DROPOFF = 4
 }
 
 //[CreateAssetMenu(menuName = "Interactable Data")]
