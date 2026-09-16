@@ -1499,7 +1499,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.4, z: 1}
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1650542032}
   m_Father: {fileID: 905242414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1151355198
@@ -2381,11 +2382,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858295810}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1513726553}
+      addedObject: {fileID: 1513726555}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1513726554}
@@ -2395,8 +2399,13 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
   m_PrefabInstance: {fileID: 1513726547}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1513726553
-MeshCollider:
+--- !u!4 &1513726552 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
+  m_PrefabInstance: {fileID: 1513726547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1513726554
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2409,15 +2418,14 @@ MeshCollider:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_LayerOverridePriority: 1
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4411361228764603502, guid: cde753a74e362464d9571c394c8c4a36, type: 3}
---- !u!114 &1513726554
+  serializedVersion: 3
+  m_Size: {x: 0.559157, y: 0, z: 3.6049116}
+  m_Center: {x: 0, y: 0.9917166, z: 1.779674}
+--- !u!114 &1513726555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2426,11 +2434,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1513726548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231bc362b471c3a4788ed8a0874f274b, type: 3}
+  m_Script: {fileID: 11500000, guid: 40b8f2a03dc80084b8570dd2677037ad, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  topPoint: {fileID: 0}
-  bottomPoint: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::climbLadder
+  topPoint: {fileID: 1151355197}
+  bottomPoint: {fileID: 905242414}
 --- !u!1 &1531720961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2680,14 +2688,14 @@ Transform:
   m_GameObject: {fileID: 1650542031}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 18, z: 43}
-  m_LocalScale: {x: 2, y: 0.5, z: 2}
+  m_LocalPosition: {x: 0.4285714, y: 0.50000006, z: 1.8585713}
+  m_LocalScale: {x: 0.28571427, y: 0.02777778, z: 0.28571427}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1315873091}
   - {fileID: 1483346347}
   - {fileID: 336373033}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1151355197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657056138 stripped
 GameObject:
@@ -2716,6 +2724,52 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: af5390e2a0373984db3740f21c0ec034, type: 3}
+--- !u!1 &1858295809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858295810}
+  - component: {fileID: 1858295811}
+  m_Layer: 0
+  m_Name: climbLadder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1858295810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858295809}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1.561016, y: 0.90816313, z: 0.7318476}
+  m_LocalScale: {x: 0.8, y: -0.44843042, z: 1.0204079}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1513726552}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858295811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858295809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b8f2a03dc80084b8570dd2677037ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::climbLadder
+  topPoint: {fileID: 0}
+  bottomPoint: {fileID: 0}
 --- !u!1 &1959808748
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,7 +3378,7 @@ Transform:
   m_GameObject: {fileID: 433688512751744353}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.39, y: 10.91, z: 23.27}
+  m_LocalPosition: {x: -0.139, y: 10.91, z: 23.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3492,8 +3546,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   climbSpeed: 3
-  currentLadder: {fileID: 0}
-  climbing: 0
 --- !u!4 &8573642268262000298
 Transform:
   m_ObjectHideFlags: 0
@@ -3520,7 +3572,6 @@ SceneRoots:
   - {fileID: 778847724}
   - {fileID: 1259736807}
   - {fileID: 905242414}
-  - {fileID: 1650542032}
   - {fileID: 1037649784}
   - {fileID: 2020926070}
   - {fileID: 1531720965}
