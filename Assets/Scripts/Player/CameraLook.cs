@@ -11,13 +11,9 @@ public class CameraLook : MonoBehaviour
     public Vector3 localAngles;
     float lookX;
 
-    [SerializeField] Rigidbody playerRB;
 
-    Camera cameraComponent;
-    void Start()
-    {
-        cameraComponent = GetComponent<Camera>();
-    }
+
+   
 
     // Update is called once per frame
     void Update()
@@ -28,9 +24,7 @@ public class CameraLook : MonoBehaviour
         lookX = Mathf.Clamp(lookX,-90, 90);
 
         transform.localEulerAngles = new Vector3(lookX, 0, 0);
-        Vector3 flatVelocity = new Vector3(playerRB.linearVelocity.x, 0, playerRB.linearVelocity.z);
-        cameraComponent.fieldOfView = 60 + flatVelocity.magnitude;
-        
+     
 
         
     }
