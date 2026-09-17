@@ -20,7 +20,6 @@ public class Movement : MonoBehaviour
     [Header("Input Actions")]
     [SerializeField] InputActionReference move;
     [SerializeField] InputActionReference jump;
-    [SerializeField] InputActionReference look;
     [SerializeField] InputActionReference run;
 
     [Header("Ground Check")]
@@ -30,20 +29,17 @@ public class Movement : MonoBehaviour
     Vector3 moveDirection;
     float moveLockTime;
 
-    private void Awake()
-    {
+    private void Awake() {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
+    private void Start() {
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnEnable()
     {
         move.action.Enable();
-        look.action.Enable();
         jump.action.Enable();
         run.action.Enable();
 
@@ -55,29 +51,26 @@ public class Movement : MonoBehaviour
         jump.action.performed -= OnJump;
 
         move.action.Disable();
-        look.action.Disable();
         jump.action.Disable();
         run.action.Disable();
     }
 
-    private void Update()
-    {
-        moveInput = move.action.ReadValue<Vector2>();
+    private void Update() {
+        if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
+            return;
 
-        Vector3 lookDirection = transform.eulerAngles;
-        lookDirection.y += look.action.ReadValue<Vector2>().x;
-        transform.eulerAngles = lookDirection;
+        moveInput = move.action.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
+        if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
+            return;
+
         MovePlayer();
     }
 
-    private void MovePlayer()
-    {
-        if (moveLockTime > 0f)
-        {
+    private void MovePlayer() {
+        if (moveLockTime > 0f) {
             moveLockTime -= Time.fixedDeltaTime;
             return;
         }
@@ -98,13 +91,11 @@ public class Movement : MonoBehaviour
             targetVelocity.z);
     }
 
-    private void OnJump(InputAction.CallbackContext context)
-    {
+    private void OnJump(InputAction.CallbackContext context) {
         // Preserve your existing jump hookup; add jump behaviour here later.
     }
 
-    private void OnDrawGizmos()
-    {
+    private void OnDrawGizmos() {
         Gizmos.DrawLine(
             transform.position + Vector3.down,
             transform.position + Vector3.down + (Vector3.down * 0.3f));
