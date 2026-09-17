@@ -94,6 +94,9 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isClimbing)
+            return;
+        
         MovePlayer();
         SpeedControl();
     }
