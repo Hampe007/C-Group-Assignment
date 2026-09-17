@@ -2,15 +2,24 @@
     -unity-font-definition: url("project://database/Assets/Models/UI/Fonts/False.ttf?fileID=12800000&guid=07ea2196493900746a0f2368ed4d182b&type=3#False");
 }
 
+#UpperContainer {
+    height: 55%;
+    width: 100%;
+    padding-bottom: 3%;
+}
+
+#LowerContainer {
+    width: 100%;
+    height: 25%;
+    flex-grow: 1;
+    padding-top: 2%;
+}
+
 #ButtonContainer {
-    width: 341px;
 }
 
 Button {
-    margin-top: 0;
-    margin-bottom: 30px;
     background-color: rgba(255, 255, 255, 0);
-    font-size: 30px;
     color: rgb(0, 0, 0);
     background-image: url("project://database/Assets/UI%20Toolkit/Textures/cool_btn.png?fileID=2800000&guid=f299bf55f89787744ac95f8b60f2a629&type=3#cool_btn");
     -unity-background-scale-mode: scale-to-fit;
@@ -21,6 +30,16 @@ Button {
     border-left-width: 0;
     opacity: 0.95;
     transition-duration: 0.125s;
+    align-self: center;
+    aspect-ratio: 6;
+    width: 550px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    height: auto;
+    font-size: 45px;
+    margin-bottom: 10px;
 }
 
 Button:focus {
@@ -37,27 +56,33 @@ Button:hover {
     scale: 1.025 1.025;
 }
 
+.largeTextLabel {
+    -unity-text-align: upper-center;
+    font-size: 80px;
+    margin-bottom: 1%;
+}
+
 .timerEmphasized {
-    width: 200px;
-    height: 200px;
-    font-size: 45px;
+    width: 350px;
+    height: auto;
+    color: rgb(255, 255, 255);
+    transition-timing-function: ease-out;
+    transition-duration: 0.5s;
 }
 
 .timerRegular {
-    width: 130px;
-    height: 130px;
     transition-duration: 0.35s;
     transition-timing-function: ease-in-out-sine;
-    font-size: 20px;
+    color: rgb(255, 255, 255);
+    width: 300px;
 }
 
 .timerFlash {
     color: rgb(170, 67, 67);
     transition-timing-function: ease-out;
     transition-duration: 0.5s;
-    width: 130px;
-    height: 130px;
-    font-size: 20px;
+    width: 300px;
+    height: auto;
 }
 
 .overlay {
@@ -73,12 +98,8 @@ Button:hover {
     visibility: hidden;
 }
 
-.scoreRegular {
-    translate: 100px -245px;
-}
-
 .scoreRegular .pointsText {
-    font-size: 18px;
+    font-size: 43px;
     color: rgba(255, 255, 255, 0.722);
     transition-timing-function: ease-in;
     transition-duration: 0.125s;
@@ -86,18 +107,12 @@ Button:hover {
 
 .scoreEmphasized .pointsText {
     color: rgb(255, 255, 255);
+    font-size: 50px;
 }
 
-.scoreGameOver {
-    transition-duration: 1s;
-}
-
-.scoreGameOver .pointsText {
-    font-size: 30px;
-    color: rgb(255, 255, 255);
-}
-
-.scoreGameOver .scoreText {
-    font-size: 30px;
-    color: rgb(26, 26, 26);
+.scoreText {
+    color: rgba(20, 20, 20, 0.835);
+    font-size: 35px;
+    transition-timing-function: ease-in;
+    transition-duration: 0.125s;
 }

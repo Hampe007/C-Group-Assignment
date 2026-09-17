@@ -431,17 +431,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3293912562421034382, guid: 02755222b8a12f040841d5c7b1b94356, type: 3}
-      propertyPath: testingData.StartTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4141242672584116875, guid: 02755222b8a12f040841d5c7b1b94356, type: 3}
       propertyPath: m_Name
       value: LvlOverlayUI
       objectReference: {fileID: 0}
     - target: {fileID: 4141242672584116875, guid: 02755222b8a12f040841d5c7b1b94356, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -462,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2268232382051802665, guid: 39f696418ae8c264f966f6798fba1d3a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8698412239012780460, guid: 39f696418ae8c264f966f6798fba1d3a, type: 3}
       propertyPath: m_LocalPosition.x

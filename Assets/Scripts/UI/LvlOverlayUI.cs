@@ -15,7 +15,6 @@ static class TimerClasses {
 static class ScoreClasses {
     public static string Emphasized => "scoreEmphasized";
     public static string Regular => "scoreRegular";
-    public static string GameOver => "scoreGameOver";
 }
 
 [System.Serializable]
@@ -32,8 +31,9 @@ public class LvlOverlayUI : MonoBehaviour {
     [SerializeField] string sceneLoadOnQuit;
     [SerializeField] TestingData testingData;
     VisualElement _timerElement, _scoreElement;
+    VisualElement _statsContainer;
     VisualElement _gameOverOverlay, _gamePausedOverlay;
-    Label _timerLabel, _pointsLabel;
+    Label _timerLabel, _pointsLabel, _largePointsLabel;
     Coroutine _timerFlashRoutineRef;
 
     void Awake()
@@ -41,7 +41,9 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerElement = UIDoc.rootVisualElement.Q<VisualElement>("TimerElement");
         _timerLabel = UIDoc.rootVisualElement.Q<Label>("TimerLabel");
         _scoreElement = UIDoc.rootVisualElement.Q<VisualElement>("ScoreElement");
+        _statsContainer = UIDoc.rootVisualElement.Q<VisualElement>("StatsContainer");
         _pointsLabel = UIDoc.rootVisualElement.Q<Label>("PointsLabel");
+        _largePointsLabel = UIDoc.rootVisualElement.Q<Label>("LargePointsLabel");
         _gameOverOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GameOverOverlay");
         _gamePausedOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GamePausedOverlay");
 
@@ -56,6 +58,7 @@ public class LvlOverlayUI : MonoBehaviour {
         UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnGameResumed; // TODO: invoke ResumeGame method from public class
 
         // TODO: subscribe UpdateTimerVisual to UnityEvent/class which returns the actual timer
+        // TODO: subscribe UpdatePointsVisual to UnityEvent/class which returns the actual score
         // TODO: subscribe OnGamePaused to UnityEvent/game state class which tells when the game is paused
         // TODO: subscribe OnGameResumed to UnityEvent/game state class which tells when the game is resumed/not paused
         // TODO: subscribe OnGameOver to UnityEvent/game state class which tells when the game is over
@@ -92,6 +95,11 @@ public class LvlOverlayUI : MonoBehaviour {
         }
     }
 
+    void GetElementRefs()
+    {
+
+    }
+
 
     void UpdateTimerVisual(float time)
     {
@@ -116,6 +124,7 @@ public class LvlOverlayUI : MonoBehaviour {
     {
         StartCoroutine(ScoreEmphasizeRoutine());
         _pointsLabel.text = points.ToString();
+        _largePointsLabel.text = _pointsLabel.text = points.ToString();
     }
 
     void OnQuitButtonPress()
@@ -145,9 +154,7 @@ public class LvlOverlayUI : MonoBehaviour {
             Time.timeScale = 0;
         }
         _gameOverOverlay.visible = true;
-        _scoreElement.AddToClassList(ScoreClasses.GameOver);
-        _scoreElement.RemoveFromClassList(ScoreClasses.Emphasized);
-        _scoreElement.RemoveFromClassList(ScoreClasses.Regular);
+        _statsContainer.visible = false;
     }
 
     void OnGamePaused()
@@ -187,13 +194,11 @@ public class LvlOverlayUI : MonoBehaviour {
     IEnumerator TimerEmphasizeRoutine()
     {
         _timerElement.AddToClassList(TimerClasses.Emphasized);
-        yield return new WaitForEndOfFrame();
         _timerElement.RemoveFromClassList(TimerClasses.Regular);
 
         yield return new WaitForEndOfFrame();
 
         _timerElement.AddToClassList(TimerClasses.Regular);
-        yield return new WaitForEndOfFrame();
         _timerElement.RemoveFromClassList(TimerClasses.Emphasized);
     }
 
