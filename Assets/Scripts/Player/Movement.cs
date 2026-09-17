@@ -2,10 +2,23 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
+
+public enum PlayerState
+{
+    ground=0,
+    air=1,
+    sliding=2,
+    slideJump=3
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
+
+    CapsuleCollider capsuleCollider;
 
     [Header("Movement")]
     [SerializeField] float acceleration;
@@ -15,20 +28,31 @@ public class Movement : MonoBehaviour
     [SerializeField] float jumpStrength;
     [SerializeField] float groundDrag;
     [SerializeField] float airDrag;
+    [SerializeField] float slopeDrag;
     [SerializeField] float airMultiplier;
     [SerializeField] float maxSlopeAngle;
+
+    [SerializeField] float slopeAcceleration;
+
+    [SerializeField] int maxAirJumps;
+    int airJumps;
+
+    float maxSpeed;
 
     [Header("Input Actions")]
     [SerializeField] InputActionReference move;
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference look;
     [SerializeField] InputActionReference run;
+    [SerializeField] InputActionReference slide;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayerMask;
     [SerializeField] float groundCheckDistance;
 
-    bool isGrounded;
+
+   
+    PlayerState currentState;
 
     Vector2 moveInput;
     Vector3 moveDirection;
@@ -50,39 +74,41 @@ public class Movement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
     {
+        airJumps = maxAirJumps;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnEnable()
     {
-        print("enable");
         move.action.Enable();
         look.action.Enable();
         jump.action.Enable();
         run.action.Enable();
+        slide.action.Enable();
 
         jump.action.performed += OnJump;
     }
 
     private void OnDisable()
     {
-        print("disable");
         jump.action.performed -= OnJump;
 
         move.action.Disable();
         look.action.Disable();
         jump.action.Disable();
         run.action.Disable();
+        slide.action.Disable();
     }
 
 
     private void Update()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayerMask);
+       
         moveInput = move.action.ReadValue<Vector2>();
 
         Vector3 lookDirection = transform.eulerAngles;
@@ -95,45 +121,113 @@ public class Movement : MonoBehaviour
         MovePlayer();
         SpeedControl();
     }
+    bool CanExitSlide()
+    {
+        return !Physics.Raycast(transform.position, Vector3.up, groundCheckDistance, groundLayerMask);
+    }
+    void SetPlayerState()
+    {
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayerMask);
+        bool slidePressed = slide.action.phase == InputActionPhase.Performed;
+        if (isGrounded)
+        {
+            if (slidePressed)
+            {
+                currentState = PlayerState.sliding;
+            }
+            else
+            {
+                currentState = PlayerState.ground;
+            }
+        }
+        else if ((currentState == PlayerState.sliding||currentState==PlayerState.slideJump)&&rb.linearVelocity.magnitude>runMaxSpeed) 
+        {
+            currentState = PlayerState.slideJump;
+        }
+        else currentState = PlayerState.air;
+    }
+    void SetColliderSize()
+    {
+        Transform cameraPos = GetComponentInChildren<Camera>().transform;
+        if (currentState == PlayerState.sliding)
+        {
+            capsuleCollider.height = 1;
+            capsuleCollider.center = new Vector3(0, -0.5f, 0);
+            cameraPos.localPosition = new Vector3(0, 0, 0);
+        }
+        else if (CanExitSlide())
+        {
+            capsuleCollider.height = 2;
+            capsuleCollider.center = new Vector3(0, 0, 0);
+            cameraPos.localPosition = new Vector3(0, 1, 0);
+        }
+    }
     private void MovePlayer()
     {
-        if (!isGrounded)
+      
+        SetPlayerState();
+        SetColliderSize();
+
+        maxSpeed = run.action.phase == InputActionPhase.Performed
+          ? runMaxSpeed
+          : walkMaxSpeed;
+
+        switch (currentState)
         {
-            rb.linearVelocity += Vector3.down * gravityScale;
-            rb.linearDamping = airDrag;
+            case PlayerState.ground:
+                rb.linearDamping = groundDrag;
+                airJumps = maxAirJumps;
+                break;
+            case PlayerState.air:
+            case PlayerState.slideJump:
+                rb.linearDamping = airDrag;
+                rb.linearVelocity += Vector3.down * gravityScale; //gravity
+                break;
+            case PlayerState.sliding:
+                rb.linearDamping = slopeDrag;
+                airJumps = maxAirJumps;
+                break;
+          
         }
-        else 
-            rb.linearDamping = groundDrag;
+    
+           
         
         Vector3 forward = transform.forward * moveInput.y;
         Vector3 right = transform.right * moveInput.x;
         moveDirection = (forward + right).normalized;
 
-
-      
+        if (currentState == PlayerState.sliding)         
+            moveDirection = Vector3.zero;
         
-        float multiplier = isGrounded
+
+        float multiplier = currentState != PlayerState.air
             ? 1
             : airMultiplier;
+        
+        
+        Vector3 flatVel=rb.linearVelocity;
+        flatVel.y = 0;
+        if (flatVel.magnitude > maxSpeed&&currentState==PlayerState.slideJump ) 
+            multiplier *= 0f;
+        
 
         Vector3 targetVelocity = moveDirection * acceleration;
        
         if (IsOnSlope())
-            targetVelocity = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal) * acceleration;
-        
+            if (currentState == PlayerState.sliding)
+                targetVelocity += Vector3.ProjectOnPlane(Vector3.down, slopeHit.normal).normalized * slopeAcceleration;
             
+            else 
+                targetVelocity = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized * acceleration;
 
-        rb.linearVelocity += new Vector3(
-            targetVelocity.x,
-            0,
-            targetVelocity.z)*multiplier;
+
+
+        rb.linearVelocity += targetVelocity * multiplier;
     }
     void SpeedControl()
     {
-
-        float maxSpeed = run.action.phase == InputActionPhase.Performed
-            ? runMaxSpeed
-            : walkMaxSpeed;
+        if (currentState == PlayerState.sliding || currentState == PlayerState.slideJump) return;
+        
         Vector3 flatVelocity = new Vector3(
             rb.linearVelocity.x,
             0,
@@ -149,8 +243,8 @@ public class Movement : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        if (!isGrounded) return;
-       
+        if (airJumps<=0&& (currentState == PlayerState.air||currentState==PlayerState.slideJump)) return;
+        if( currentState==PlayerState.air||currentState==PlayerState.slideJump) airJumps--;
         rb.linearVelocity = new Vector3(
             rb.linearVelocity.x, 
             jumpStrength, 
