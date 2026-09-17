@@ -9,7 +9,8 @@ public class DropOffChest : Interactable
 
     [Header("Chest")]
     [SerializeField] private DropOffChestAnimator chestAnimator;
-
+    [SerializeField] private DropOffFeedback feedback;
+    
     private bool playerInRange;
 
     // Score/game systems can subscribe to this.
@@ -18,17 +19,25 @@ public class DropOffChest : Interactable
 
     private bool HasItemToDropOff() => Inventory.Instance != null && Inventory.Instance.GetLastCollectable() != null;
 
-    private bool ShouldShowPrompt() =>
-        playerInRange &&
-        HasItemToDropOff();
+    private bool ShouldShowPrompt() => playerInRange && HasItemToDropOff();
 
     protected override void OnEnable()
     {
         base.OnEnable();
         SetPromptVisible(false);
+        feedback?.SetAvailable(false);
+        feedback?.SetMarkerVisible(false);
     }
 
-    private void Update() => SetPromptVisible(ShouldShowPrompt());
+    private void Update()
+    {
+        bool hasItem = HasItemToDropOff();
+        bool canDropOff = ShouldShowPrompt();
+
+        SetPromptVisible(canDropOff);
+        feedback?.SetAvailable(canDropOff); // Close-range feedback.
+        feedback?.SetMarkerVisible(hasItem && !playerInRange);  // Long-range marker.
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,6 +58,7 @@ public class DropOffChest : Interactable
 
         playerInRange = false;
         SetPromptVisible(false);
+        feedback?.SetAvailable(false);
     }
 
     public override SO_InteractableData Interact()
@@ -59,8 +69,7 @@ public class DropOffChest : Interactable
         }
 
         // Removes the most recently collected item from the inventory.
-        SO_InteractableCollectableData droppedItem =
-            Inventory.Instance.RemoveAndGetLastCollectable();
+        SO_InteractableCollectableData droppedItem = Inventory.Instance.RemoveAndGetLastCollectable();
 
         if (droppedItem == null)
         {
@@ -68,11 +77,14 @@ public class DropOffChest : Interactable
         }
 
         chestAnimator?.PlayDepositAnimation();
-
+        
+        feedback?.PlayDeposit();
+        
         // Example: score system can subscribe here.
         ItemDroppedOff?.Invoke(droppedItem);
 
         SetPromptVisible(false);
+        feedback?.SetAvailable(false);
 
         return data;
     }
