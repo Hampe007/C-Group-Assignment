@@ -29,6 +29,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float groundCheckDistance;
 
     bool isGrounded;
+    bool isClimbing;
+
 
     Vector2 moveInput;
     Vector3 moveDirection;
@@ -97,7 +99,7 @@ public class Movement : MonoBehaviour
     }
     private void MovePlayer()
     {
-        if (!isGrounded)
+        if (!isGrounded && !isClimbing)
         {
             rb.linearVelocity += Vector3.down * gravityScale;
             rb.linearDamping = airDrag;
@@ -155,6 +157,11 @@ public class Movement : MonoBehaviour
             rb.linearVelocity.x, 
             jumpStrength, 
             rb.linearVelocity.z);
+    }
+
+    public void SetClimbing(bool climbing)
+    {
+        isClimbing = climbing;
     }
 
     private void OnDrawGizmos()

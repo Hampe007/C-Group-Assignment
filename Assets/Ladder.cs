@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class Ladder : MonoBehaviour
 {
     // How fast the player climbs.
     [SerializeField] private float climbSpeed = 3f;
+
+   
 
     private void OnTriggerStay(Collider other)
     {
@@ -13,9 +16,12 @@ public class Ladder : MonoBehaviour
         // Only affect the Player.
         if (rb == null || !rb.CompareTag("Player"))
             return;
-
-        // Disable gravity while climbing.
-        rb.useGravity = false;
+        Movement movement = rb.GetComponent<Movement>();
+       // Tell the Movement script that the player is climbing.
+       if (movement != null)
+        {
+            movement.SetClimbing(true);
+        }
 
         // The direction the player climbs.
         Vector3 climbDirection = transform.up;
@@ -43,8 +49,11 @@ public class Ladder : MonoBehaviour
 
         if (rb == null || !rb.CompareTag("Player"))
             return;
-
-        // Turn gravity back on when leaving the ladder.
-        rb.useGravity = true;
+        Movement movement = rb.GetComponent<Movement>();
+       // Tell the Movement script that the player stopped climbing.
+       if (movement != null)
+        {
+            movement.SetClimbing(false);
+        }
     }
 }
