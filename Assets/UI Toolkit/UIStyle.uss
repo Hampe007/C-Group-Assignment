@@ -1,5 +1,5 @@
 :root {
-    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/False.ttf?fileID=12800000&guid=07ea2196493900746a0f2368ed4d182b&type=3#False");
+    -unity-font-definition: url("project://database/Assets/Models/UI/Fonts/False.ttf?fileID=12800000&guid=07ea2196493900746a0f2368ed4d182b&type=3#False");
 }
 
 #ButtonContainer {
@@ -52,7 +52,7 @@ Button:hover {
 }
 
 .timerFlash {
-    color: rgb(248, 48, 48);
+    color: rgb(170, 67, 67);
     transition-timing-function: ease-out;
     transition-duration: 0.5s;
     width: 130px;
@@ -71,5 +71,33 @@ Button:hover {
     background-color: rgba(0, 0, 0, 0.325);
     background-image: none;
     visibility: hidden;
+}
+
+.scoreRegular {
+    translate: 100px -245px;
+}
+
+.scoreRegular .pointsText {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.722);
+    transition-timing-function: ease-in;
     transition-duration: 0.125s;
+}
+
+.scoreEmphasized .pointsText {
+    color: rgb(255, 255, 255);
+}
+
+.scoreGameOver {
+    transition-duration: 1s;
+}
+
+.scoreGameOver .pointsText {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.scoreGameOver .scoreText {
+    font-size: 30px;
+    color: rgb(26, 26, 26);
 }

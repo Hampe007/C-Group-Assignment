@@ -12,6 +12,12 @@ static class TimerClasses {
     public static string Flash => "timerFlash";
 }
 
+static class ScoreClasses {
+    public static string Emphasized => "scoreEmphasized";
+    public static string Regular => "scoreRegular";
+    public static string GameOver => "scoreGameOver";
+}
+
 [System.Serializable]
 struct TestingData
 {
@@ -23,17 +29,19 @@ struct TestingData
 public class LvlOverlayUI : MonoBehaviour {
     [SerializeField] UIDocument UIDoc;
     [Tooltip("Which scene to load on quit button press")]
-    [SerializeField] string mainMenuScene;
+    [SerializeField] string sceneLoadOnQuit;
     [SerializeField] TestingData testingData;
-    VisualElement _timerElement;
+    VisualElement _timerElement, _scoreElement;
     VisualElement _gameOverOverlay, _gamePausedOverlay;
-    Label _timerLabel;
+    Label _timerLabel, _pointsLabel;
     Coroutine _timerFlashRoutineRef;
 
     void Awake()
     {
-        _timerLabel = UIDoc.rootVisualElement.Q<Label>("TimerLabel");
         _timerElement = UIDoc.rootVisualElement.Q<VisualElement>("TimerElement");
+        _timerLabel = UIDoc.rootVisualElement.Q<Label>("TimerLabel");
+        _scoreElement = UIDoc.rootVisualElement.Q<VisualElement>("ScoreElement");
+        _pointsLabel = UIDoc.rootVisualElement.Q<Label>("PointsLabel");
         _gameOverOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GameOverOverlay");
         _gamePausedOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GamePausedOverlay");
 
@@ -58,6 +66,7 @@ public class LvlOverlayUI : MonoBehaviour {
         if (testingData.IsTest)
         {
             StartCoroutine(TimerTestRoutine(testingData.StartTime));
+            StartCoroutine(ScoreTestRoutine(2f));
         }
         StartCoroutine(TimerEmphasizeRoutine());
     }
@@ -103,13 +112,19 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerLabel.text = $"{minutesText}:{secondsText}";
     }
 
+    void UpdatePointsVisual(int points)
+    {
+        StartCoroutine(ScoreEmphasizeRoutine());
+        _pointsLabel.text = points.ToString();
+    }
+
     void OnQuitButtonPress()
     {
         if (testingData.IsTest)
         {
             Time.timeScale = 1;
         }
-        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.LoadScene(sceneLoadOnQuit);
     }
 
     void OnRetryButtonPress()
@@ -130,6 +145,9 @@ public class LvlOverlayUI : MonoBehaviour {
             Time.timeScale = 0;
         }
         _gameOverOverlay.visible = true;
+        _scoreElement.AddToClassList(ScoreClasses.GameOver);
+        _scoreElement.RemoveFromClassList(ScoreClasses.Emphasized);
+        _scoreElement.RemoveFromClassList(ScoreClasses.Regular);
     }
 
     void OnGamePaused()
@@ -155,15 +173,28 @@ public class LvlOverlayUI : MonoBehaviour {
         _gamePausedOverlay.visible = false;
     }
 
-    IEnumerator TimerEmphasizeRoutine()
+    IEnumerator ScoreEmphasizeRoutine()
     {
-        _timerElement.RemoveFromClassList(TimerClasses.Regular);
-        _timerElement.AddToClassList(TimerClasses.Emphasized);
+        _scoreElement.AddToClassList(ScoreClasses.Emphasized);
+        _scoreElement.RemoveFromClassList(ScoreClasses.Regular);
 
         yield return new WaitForEndOfFrame();
 
-        _timerElement.RemoveFromClassList(TimerClasses.Emphasized);
+        _scoreElement.AddToClassList(ScoreClasses.Regular);
+        _scoreElement.RemoveFromClassList(ScoreClasses.Emphasized);
+    }
+
+    IEnumerator TimerEmphasizeRoutine()
+    {
+        _timerElement.AddToClassList(TimerClasses.Emphasized);
+        yield return new WaitForEndOfFrame();
+        _timerElement.RemoveFromClassList(TimerClasses.Regular);
+
+        yield return new WaitForEndOfFrame();
+
         _timerElement.AddToClassList(TimerClasses.Regular);
+        yield return new WaitForEndOfFrame();
+        _timerElement.RemoveFromClassList(TimerClasses.Emphasized);
     }
 
     IEnumerator TimerFlashRoutine(float duration)
@@ -178,14 +209,14 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             if (elapsed % 1 >= 0 && elapsed % 1 < animationDuration && !isFlashOn)
             {
-                _timerElement.RemoveFromClassList(TimerClasses.Regular);
                 _timerElement.AddToClassList(TimerClasses.Flash);
+                _timerElement.RemoveFromClassList(TimerClasses.Regular);
                 isFlashOn = true;
             }
             else if (elapsed % 1 >= animationDuration && isFlashOn)
             {
-                _timerElement.RemoveFromClassList(TimerClasses.Flash);
                 _timerElement.AddToClassList(TimerClasses.Regular);
+                _timerElement.RemoveFromClassList(TimerClasses.Flash);
                 isFlashOn = false;
             }
 
@@ -207,6 +238,17 @@ public class LvlOverlayUI : MonoBehaviour {
             elapsed = Time.time - startTime;
             UpdateTimerVisual(totalTime - elapsed);
             yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator ScoreTestRoutine(float interval)
+    {
+        int points = 0;
+        while (Application.isPlaying)
+        {
+            points += UnityEngine.Random.Range(1, 6) * 100;
+            UpdatePointsVisual(points);
+            yield return new WaitForSeconds(interval);
         }
     }
 
