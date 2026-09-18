@@ -18,6 +18,7 @@ public class DissapearingPlatfformScript : MonoBehaviour
         if (StartOff == true)
         Plattform.active = false;
 
+        if (Marker != null)
         Marker.transform.position = Plattform.transform.position;
 
         StartCoroutine(DissapearTimer());
