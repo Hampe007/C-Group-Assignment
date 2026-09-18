@@ -9,14 +9,17 @@ public class MovingPlattformScript : MonoBehaviour
     [SerializeField] private GameObject Point2;
     [SerializeField] private float Speed = 10;
     [SerializeField] private float Wait = 1;
+    [SerializeField] private float Wait2 = -1;
     [SerializeField] private float DeSync = 0;
+    [SerializeField] private bool OneWay = false;
 
     private Vector3 TargetPosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        if (Wait2 == -1)
+            Wait2 = Wait;
         Plattform.transform.position = Point1.transform.position;
         TargetPosition = Point2.transform.position;
         StartCoroutine(MovePlattform());
@@ -35,9 +38,15 @@ public class MovingPlattformScript : MonoBehaviour
                 yield return null;
             }
 
-            TargetPosition = TargetPosition == Point1.transform.position 
-                ? Point2.transform.position : Point1.transform.position;
-
+            if (OneWay == false)
+            {
+                TargetPosition = TargetPosition == Point1.transform.position ? Point2.transform.position : Point1.transform.position;
+            }
+            else if (OneWay == true)
+            {
+                yield return new WaitForSeconds(Wait2);
+                Plattform.transform.position = Point1.transform.position;
+            }
             yield return new WaitForSeconds(Wait);
         }
     }
