@@ -35,7 +35,7 @@ public class Ladder : MonoBehaviour
         if (detachedPlayers.Contains(rb))
             return;
 
-        Movement movement = rb.GetComponent<Movement>();
+        PlayerMovement movement = rb.GetComponent<PlayerMovement>();
         float climbInput = 0f;
         bool cancelClimb = false;
 
@@ -82,11 +82,11 @@ public class Ladder : MonoBehaviour
 
         detachedPlayers.Remove(rb);
 
-        Movement movement = rb.GetComponent<Movement>();
+        PlayerMovement movement = rb.GetComponent<PlayerMovement>();
         movement?.SetClimbing(false);
     }
 
-    private void DetachPlayer(Rigidbody rb, Movement movement, bool jumpAway)
+    private void DetachPlayer(Rigidbody rb, PlayerMovement movement, bool jumpAway)
     {
         detachedPlayers.Add(rb);
         movement?.SetClimbing(false);

@@ -749,7 +749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.78
+      value: 6.42
       objectReference: {fileID: 0}
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1036,6 +1036,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 280522812}
     m_Modifications:
+    - target: {fileID: 1821772236452861899, guid: 9118a80174389084897fdc8920da14fd, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 531994936}
     - target: {fileID: 4448700112728036872, guid: 9118a80174389084897fdc8920da14fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -1089,6 +1093,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9118a80174389084897fdc8920da14fd, type: 3}
+--- !u!1 &531994936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 264674831305434630, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
+  m_PrefabInstance: {fileID: 341159686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &541493656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4900374755058858014, guid: 8f20863f569f70045b828bc1b61ee7cb, type: 3}
@@ -2837,6 +2846,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 280522812}
     m_Modifications:
+    - target: {fileID: 1821772236452861899, guid: 9118a80174389084897fdc8920da14fd, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 531994936}
     - target: {fileID: 4448700112728036872, guid: 9118a80174389084897fdc8920da14fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -3563,6 +3576,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 280522812}
     m_Modifications:
+    - target: {fileID: 1821772236452861899, guid: 9118a80174389084897fdc8920da14fd, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 531994936}
     - target: {fileID: 4448700112728036872, guid: 9118a80174389084897fdc8920da14fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5

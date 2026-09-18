@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveInput;
     Vector3 moveDirection;
+    bool isClimbing;
 
     RaycastHit slopeHit;
     float slopeAngle;
@@ -113,6 +114,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
+            return;
+        
+        if (isClimbing)
             return;
 
         MovePlayer();
@@ -278,6 +282,11 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity.x,
             jumpStrength,
             rb.linearVelocity.z);
+    }
+      
+    public void SetClimbing(bool climbing)
+    {
+        isClimbing = climbing;
     }
 
     private void OnDrawGizmos()
