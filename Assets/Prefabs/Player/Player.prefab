@@ -84,11 +84,15 @@ MonoBehaviour:
   jumpStrength: 23
   groundDrag: 5
   airDrag: 1
+  slopeDrag: 0
   airMultiplier: 0.65
   maxSlopeAngle: 45
+  slopeAcceleration: 4
+  maxAirJumps: 1
   move: {fileID: -1680190386980627800, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
   jump: {fileID: -2099379676528639254, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
   run: {fileID: -7471211009204490832, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  slide: {fileID: 7040659881675835329, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -100,7 +104,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264674831305434630}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2df26529b5b5f434693707448646a1d1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
