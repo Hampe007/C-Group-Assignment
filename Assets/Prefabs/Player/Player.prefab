@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1245614674621850127}
   - component: {fileID: 843028618058468642}
   - component: {fileID: 6854159622076561838}
-  - component: {fileID: 4192053108974337231}
+  - component: {fileID: 6027750642664810778}
   - component: {fileID: 1041675067166115435}
   - component: {fileID: 4580038368980269861}
   - component: {fileID: 1015219936585534645}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   interact: {fileID: 1781555164194001046, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
---- !u!114 &4192053108974337231
+--- !u!114 &6027750642664810778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,12 +74,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 264674831305434630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e083d60b8f68c82479042a8744a19535, type: 3}
+  m_Script: {fileID: 11500000, guid: 06970805e0c3a17439ff75621695ef76, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   acceleration: 3
   walkMaxSpeed: 8.888889
-  runMaxSpeed: 22.222221
+  runMaxSpeed: 22.22222
   gravityScale: 1.5
   jumpStrength: 23
   groundDrag: 5

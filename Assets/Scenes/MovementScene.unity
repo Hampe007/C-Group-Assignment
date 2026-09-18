@@ -468,18 +468,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1041675067166115435, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: m_Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1041675067166115435, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: m_Center.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1041675067166115435, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 2df26529b5b5f434693707448646a1d1, type: 2}
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.587196
@@ -519,58 +507,6 @@ PrefabInstance:
     - target: {fileID: 1245614674621850127, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: slide
-      value: 
-      objectReference: {fileID: 7040659881675835329, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: airDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: maxJumps
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: maxAirJumps
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: runMaxSpeed
-      value: 22.222221
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: acceleration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: gravityScale
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: jumpStrength
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: walkMaxSpeed
-      value: 8.888889
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: airMultiplier
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: maxSlopeAngle
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: slopeAcceleration
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192053108974337231, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
-      propertyPath: groundCheckDistance
-      value: 1.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
