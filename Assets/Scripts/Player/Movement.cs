@@ -80,7 +80,6 @@ public class Movement : MonoBehaviour
             return;
         
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayerMask);
-        moveInput = move.action.ReadValue<Vector2>();
 
         moveInput = move.action.ReadValue<Vector2>();
     }
@@ -116,8 +115,6 @@ public class Movement : MonoBehaviour
         if (IsOnSlope())
             targetVelocity = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal) * acceleration;
         
-            
-
         rb.linearVelocity += new Vector3(
             targetVelocity.x,
             0,
