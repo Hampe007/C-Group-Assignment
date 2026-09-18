@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,10 +25,26 @@ public class Movement : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayerMask;
+    [SerializeField] float groundCheckDistance;
+
+    bool isGrounded;
 
     Vector2 moveInput;
     Vector3 moveDirection;
-    float moveLockTime;
+
+    RaycastHit slopeHit;
+
+
+    bool IsOnSlope()
+    {
+        if(Physics.Raycast(transform.position,Vector3.down,out slopeHit, groundCheckDistance, groundLayerMask))
+        {
+            float slopeAngle=Vector3.Angle(Vector3.up,slopeHit.normal);
+            if (slopeAngle < maxSlopeAngle && slopeAngle != 0)
+                return true;
+        }
+        return false;
+    }
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -39,6 +56,7 @@ public class Movement : MonoBehaviour
 
     private void OnEnable()
     {
+        print("enable");
         move.action.Enable();
         jump.action.Enable();
         run.action.Enable();
@@ -48,6 +66,7 @@ public class Movement : MonoBehaviour
 
     private void OnDisable()
     {
+        print("disable");
         jump.action.performed -= OnJump;
 
         move.action.Disable();
@@ -55,9 +74,13 @@ public class Movement : MonoBehaviour
         run.action.Disable();
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
             return;
+        
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayerMask);
+        moveInput = move.action.ReadValue<Vector2>();
 
         moveInput = move.action.ReadValue<Vector2>();
     }
@@ -67,37 +90,71 @@ public class Movement : MonoBehaviour
             return;
 
         MovePlayer();
+        SpeedControl();
     }
 
-    private void MovePlayer() {
-        if (moveLockTime > 0f) {
-            moveLockTime -= Time.fixedDeltaTime;
-            return;
+    private void MovePlayer()
+    {
+        if (!isGrounded)
+        {
+            rb.linearVelocity += Vector3.down * gravityScale;
+            rb.linearDamping = airDrag;
         }
-
+        else 
+            rb.linearDamping = groundDrag;
+        
         Vector3 forward = transform.forward * moveInput.y;
         Vector3 right = transform.right * moveInput.x;
         moveDirection = (forward + right).normalized;
+        
+        float multiplier = isGrounded
+            ? 1
+            : airMultiplier;
+
+        Vector3 targetVelocity = moveDirection * acceleration;
+       
+        if (IsOnSlope())
+            targetVelocity = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal) * acceleration;
+        
+            
+
+        rb.linearVelocity += new Vector3(
+            targetVelocity.x,
+            0,
+            targetVelocity.z)*multiplier;
+    }
+    void SpeedControl()
+    {
 
         float maxSpeed = run.action.phase == InputActionPhase.Performed
             ? runMaxSpeed
             : walkMaxSpeed;
+        Vector3 flatVelocity = new Vector3(
+            rb.linearVelocity.x,
+            0,
+            rb.linearVelocity.z);
 
-        Vector3 targetVelocity = moveDirection * maxSpeed;
-
-        rb.linearVelocity = new Vector3(
-            targetVelocity.x,
-            rb.linearVelocity.y,
-            targetVelocity.z);
+        if (flatVelocity.magnitude > maxSpeed) 
+        {
+            flatVelocity = flatVelocity.normalized * maxSpeed;
+            rb.linearVelocity = new Vector3(flatVelocity.x, rb.linearVelocity.y, flatVelocity.z);
+        }
+            
     }
 
-    private void OnJump(InputAction.CallbackContext context) {
-        // Preserve your existing jump hookup; add jump behaviour here later.
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (!isGrounded) return;
+       
+        rb.linearVelocity = new Vector3(
+            rb.linearVelocity.x, 
+            jumpStrength, 
+            rb.linearVelocity.z);
     }
 
     private void OnDrawGizmos() {
         Gizmos.DrawLine(
-            transform.position + Vector3.down,
-            transform.position + Vector3.down + (Vector3.down * 0.3f));
+            transform.position,
+            transform.position + (Vector3.down * groundCheckDistance));
     }
 }

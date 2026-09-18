@@ -11,29 +11,6 @@ public class CameraLook : MonoBehaviour
     private float lookX;
     private float lookY;
 
-    [SerializeField] Rigidbody playerRB;
-
-    [SerializeField] float verticalSensitivity = 0.2f;
-    [SerializeField] float horizontalSensitivity = 0.35f;
-
-    Camera cameraComponent;
-
-    void Start()
-    {
-        cameraComponent = GetComponent<Camera>();
-        //Cursor.lockState = CursorLockMode.Locked;
-        if (look != null) look.action.Enable();
-    }
-
-    /*private void OnEnable() {
-        if (Look != null) Look.action.Enable();
-    }*/
-
-    private void OnDisable()
-    {
-        if (look != null) look.action.Disable();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -48,6 +25,7 @@ public class CameraLook : MonoBehaviour
         lookX -= lookInput.y * verticalSensitivity;
         lookX = Mathf.Clamp(lookX, -90f, 90f);
         transform.localEulerAngles = new Vector3(lookX, 0, 0);
+     
 
         // Horizontal Look (Yaw): Rotate the player body left and right
         lookY = lookInput.x * horizontalSensitivity;

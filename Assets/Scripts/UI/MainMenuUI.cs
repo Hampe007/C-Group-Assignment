@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 public class MainMenuUI : MonoBehaviour {
     [SerializeField] UIDocument UIDoc;
     [Tooltip("Which scene to load on start button press")]
-    [SerializeField] string sceneToLoad;
+    [SerializeField] string sceneLoadOnStart;
     Button _startButton, _quitButton;
 
     void Awake()
@@ -19,15 +19,17 @@ public class MainMenuUI : MonoBehaviour {
 
     void OnStartButtonPress()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        if (sceneLoadOnStart.Length == 0)
+        {
+            Debug.LogError($"Empty string. Enter a scene to load in the inspector for {name}.");
+            return;
+        }
+        SceneManager.LoadScene(sceneLoadOnStart);
     }
 
     void OnQuitButtonPress()
     {
         Application.Quit();
-    }
-
-    private void Start() {
     }
 
 }
