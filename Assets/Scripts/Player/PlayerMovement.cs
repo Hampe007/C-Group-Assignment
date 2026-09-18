@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,8 @@ public enum PlayerState
     ground = 0,
     air = 1,
     sliding = 2,
-    slideJump = 3
+    slideJump = 3,
+    wallRun=4
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -25,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpStrength;
     [SerializeField] float groundDrag;
     [SerializeField] float airDrag;
-    [SerializeField] float slopeDrag;
+    [SerializeField] float slideDrag;
     [SerializeField] float airMultiplier;
     [SerializeField] float maxSlopeAngle;
     [SerializeField] float slopeAcceleration;
@@ -52,7 +54,20 @@ public class PlayerMovement : MonoBehaviour
 
     RaycastHit slopeHit;
     float slopeAngle;
+    float inputLockTime;
 
+    RaycastHit wallHit;
+    bool CanWallRun()
+    {
+        if (moveInput.x == 0||currentState==PlayerState.ground ||currentState==PlayerState.sliding) return false;
+        RaycastHit tryHit;
+        if(Physics.Raycast(transform.position,transform.right*Math.Sign(moveInput.x),out tryHit, 1.3f, groundLayerMask))
+        {
+            wallHit = tryHit;
+            return true;
+        }
+        return false;
+    }
     bool IsOnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, groundCheckDistance, groundLayerMask))
@@ -80,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        print("enable");
 
         move.action.Enable();
         jump.action.Enable();
@@ -92,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        print("disable");
 
         jump.action.performed -= OnJump;
 
@@ -108,6 +121,12 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         moveInput = move.action.ReadValue<Vector2>();
+
+        if (inputLockTime > 0)
+        {
+            inputLockTime -= Time.deltaTime;
+            moveInput = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
@@ -136,7 +155,11 @@ public class PlayerMovement : MonoBehaviour
             groundLayerMask);
 
         bool slidePressed = slide.action.phase == InputActionPhase.Performed;
-
+        if(CanWallRun())
+        {
+            currentState = PlayerState.wallRun;
+            return;
+        }
         if (isGrounded)
         {
             if (slidePressed)
@@ -200,8 +223,13 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case PlayerState.sliding:
-                rb.linearDamping = slopeDrag;
+                rb.linearDamping = slideDrag;
                 airJumps = maxAirJumps;
+                break;
+            case PlayerState.wallRun:
+                rb.linearDamping = airDrag;
+                airJumps = maxAirJumps;
+                rb.linearVelocity += Vector3.down * (gravityScale/2);
                 break;
         }
 
@@ -274,10 +302,16 @@ public class PlayerMovement : MonoBehaviour
         if (currentState == PlayerState.air || currentState == PlayerState.slideJump)
             airJumps--;
 
-        rb.linearVelocity = new Vector3(
-            rb.linearVelocity.x,
-            jumpStrength,
-            rb.linearVelocity.z);
+        if (currentState == PlayerState.wallRun) //wall jump
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x + (wallHit.normal.x * jumpStrength), jumpStrength, rb.linearVelocity.z + (wallHit.normal.z * jumpStrength));
+            inputLockTime = 0.3f;
+        }
+        else 
+            rb.linearVelocity = new Vector3(
+                rb.linearVelocity.x,
+                jumpStrength,
+                rb.linearVelocity.z);
     }
 
     private void OnDrawGizmos()
