@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8698412239012780460}
   - component: {fileID: 3240599658072842904}
-  - component: {fileID: 8748272661913908250}
+  - component: {fileID: 1474057238089464050}
   m_Layer: 5
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &8748272661913908250
+--- !u!114 &1474057238089464050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,8 +65,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2268232382051802665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e97906696f1b244811ca51bdc22008, type: 3}
+  m_Script: {fileID: 11500000, guid: 55bd2fda2863ae74986f206c6bcce000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
   UIDoc: {fileID: 3240599658072842904}
-  sceneToLoad: SampleScene
+  sceneToLoad: 

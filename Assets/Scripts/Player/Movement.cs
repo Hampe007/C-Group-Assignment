@@ -21,7 +21,6 @@ public class Movement : MonoBehaviour
     [Header("Input Actions")]
     [SerializeField] InputActionReference move;
     [SerializeField] InputActionReference jump;
-    [SerializeField] InputActionReference look;
     [SerializeField] InputActionReference run;
 
     [Header("Ground Check")]
@@ -49,21 +48,18 @@ public class Movement : MonoBehaviour
         return false;
     }
 
-    private void Awake()
-    {
+    private void Awake() {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
+    private void Start() {
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnEnable()
     {
         print("enable");
         move.action.Enable();
-        look.action.Enable();
         jump.action.Enable();
         run.action.Enable();
 
@@ -76,30 +72,32 @@ public class Movement : MonoBehaviour
         jump.action.performed -= OnJump;
 
         move.action.Disable();
-        look.action.Disable();
         jump.action.Disable();
         run.action.Disable();
     }
 
-
     private void Update()
     {
+        if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
+            return;
+        
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayerMask);
-        moveInput = move.action.ReadValue<Vector2>();
 
-        Vector3 lookDirection = transform.eulerAngles;
-        lookDirection.y += look.action.ReadValue<Vector2>().x;
-        transform.eulerAngles = lookDirection;
+        moveInput = move.action.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
     {
+        if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
+            return;
+
         if (isClimbing)
             return;
-        
+
         MovePlayer();
         SpeedControl();
     }
+
     private void MovePlayer()
     {
         if (!isGrounded && !isClimbing)
@@ -113,9 +111,6 @@ public class Movement : MonoBehaviour
         Vector3 forward = transform.forward * moveInput.y;
         Vector3 right = transform.right * moveInput.x;
         moveDirection = (forward + right).normalized;
-
-
-      
         
         float multiplier = isGrounded
             ? 1
@@ -126,8 +121,6 @@ public class Movement : MonoBehaviour
         if (IsOnSlope())
             targetVelocity = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal) * acceleration;
         
-            
-
         rb.linearVelocity += new Vector3(
             targetVelocity.x,
             0,
