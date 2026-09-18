@@ -1,10 +1,19 @@
 using UnityEngine;
 
-public class InteractableCollectable : Interactable {
+public class InteractableCollectable : Interactable
+{
 
-    protected override void OnEnable() { base.OnEnable(); }
+    [Header("Interaction")]
+    [SerializeField] private GameObject interactionPrompt;
 
-    protected override void Start() {
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SetPromptVisible(false);
+    }
+
+    protected override void Start()
+    {
         base.Start();
 		//Debug.Log($"ID {GetID()}");
     }
@@ -23,5 +32,32 @@ public class InteractableCollectable : Interactable {
             ", CollectableName=" + ((SO_InteractableCollectableData)this.data).GetCollectableName() +
             ", CollectableValue=" + ((SO_InteractableCollectableData)this.data).GetCollectableValue() + 
             "]");
+    }
+    
+    private bool IsPlayer(Collider other) => other.CompareTag("Player") || other.transform.root.CompareTag("Player");
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsPlayer(other))
+        {
+            SetPromptVisible(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (IsPlayer(other))
+        {
+            SetPromptVisible(false);
+        }
+    }
+    
+    private void SetPromptVisible(bool visible)
+    {
+        if (interactionPrompt != null &&
+            interactionPrompt.activeSelf != visible)
+        {
+            interactionPrompt.SetActive(visible);
+        }
     }
 }
