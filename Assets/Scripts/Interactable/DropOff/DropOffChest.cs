@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 
+// Handles deposit availability, feedback, and scoring for the chest.
 [RequireComponent(typeof(Collider))]
 public class DropOffChest : Interactable
 {
@@ -12,10 +12,6 @@ public class DropOffChest : Interactable
     [SerializeField] private DropOffFeedback feedback;
     
     private bool playerInRange;
-
-    // Score/game systems can subscribe to this.
-    // Example: score can use droppedItem.GetCollectableValue().
-    public event Action<SO_InteractableCollectableData> ItemDroppedOff;
 
     private bool HasItemToDropOff() => Inventory.Instance != null && Inventory.Instance.GetLastCollectable() != null;
 
@@ -34,9 +30,12 @@ public class DropOffChest : Interactable
         bool hasItem = HasItemToDropOff();
         bool canDropOff = ShouldShowPrompt();
 
+        // Show close-range feedback only when a deposit is possible.
         SetPromptVisible(canDropOff);
-        feedback?.SetAvailable(canDropOff); // Close-range feedback.
-        feedback?.SetMarkerVisible(hasItem && !playerInRange);  // Long-range marker.
+        feedback?.SetAvailable(canDropOff);
+
+        // Guide players carrying an item toward the chest from a distance.
+        feedback?.SetMarkerVisible(hasItem && !playerInRange);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,7 +67,7 @@ public class DropOffChest : Interactable
             return data;
         }
 
-        // Removes the most recently collected item from the inventory.
+        // Remove the newest item first so it cannot be deposited twice.
         SO_InteractableCollectableData droppedItem = Inventory.Instance.RemoveAndGetLastCollectable();
 
         if (droppedItem == null)
@@ -76,19 +75,23 @@ public class DropOffChest : Interactable
             return data;
         }
 
+        if (GameState.Instance != null)
+        {
+            // Award the value stored on the deposited collectable.
+            GameState.Instance.AddPlayerScore(droppedItem.GetCollectableValue());
+        }
+
         chestAnimator?.PlayDepositAnimation();
         
         feedback?.PlayDeposit();
         
-        // Example: score system can subscribe here.
-        ItemDroppedOff?.Invoke(droppedItem);
-
         SetPromptVisible(false);
         feedback?.SetAvailable(false);
 
         return data;
     }
 
+    // Accept colliders tagged directly or under a Player-tagged root.
     private bool IsPlayer(Collider other) => other.CompareTag("Player") || other.transform.root.CompareTag("Player");
 
     private void SetPromptVisible(bool visible)
