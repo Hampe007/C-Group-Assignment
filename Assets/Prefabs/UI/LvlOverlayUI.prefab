@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LvlOverlayUI
   UIDoc: {fileID: 4349036913200735125}
-  mainMenuScene: MainMenuScene
+  sceneLoadOnQuit: MainMenuScene
   testingData:
     IsTest: 1
     StartTime: 15
