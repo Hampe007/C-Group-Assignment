@@ -55,23 +55,23 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             button.clicked += OnQuitButtonPress;
         });;
-        UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnGameResumed; // TODO: invoke ResumeGame method from public class
-
-        // TODO: subscribe UpdateTimerVisual to UnityEvent/class which returns the actual timer
-        // TODO: subscribe UpdatePointsVisual to UnityEvent/class which returns the actual score
-        // TODO: subscribe OnGamePaused to UnityEvent/game state class which tells when the game is paused
-        // TODO: subscribe OnGameResumed to UnityEvent/game state class which tells when the game is resumed/not paused
-        // TODO: subscribe OnGameOver to UnityEvent/game state class which tells when the game is over
+        UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnResumeButtonPress;
     }
 
     void Start()
     {
+        GameState.Instance.StartGame();
         if (testingData.IsTest)
         {
             StartCoroutine(TimerTestRoutine(testingData.StartTime));
             StartCoroutine(ScoreTestRoutine(2f));
         }
+
         StartCoroutine(TimerEmphasizeRoutine());
+        GameState.Instance.ScoreChangeEvent.AddListener(UpdatePointsVisual);
+        GameState.Instance.GamePausedEvent.AddListener(OnGamePaused);
+        GameState.Instance.GameUnPausedEvent.AddListener(OnGameResumed);
+        GameState.Instance.GameOverEvent.AddListener(OnGameOver);
     }
 
     void OnValidate()
@@ -95,9 +95,10 @@ public class LvlOverlayUI : MonoBehaviour {
         }
     }
 
-    void GetElementRefs()
+    void Update()
     {
-
+        Debug.Log(GameState.Instance.TimeRemaining);
+        UpdateTimerVisual(GameState.Instance.TimeRemaining);
     }
 
 
@@ -120,11 +121,16 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerLabel.text = $"{minutesText}:{secondsText}";
     }
 
-    void UpdatePointsVisual(int points)
+    void UpdatePointsVisual(uint scoreIncrease, uint newScore)
     {
         StartCoroutine(ScoreEmphasizeRoutine());
-        _pointsLabel.text = points.ToString();
-        _largePointsLabel.text = _pointsLabel.text = points.ToString();
+        _pointsLabel.text = newScore.ToString();
+        _largePointsLabel.text = _pointsLabel.text = newScore.ToString();
+    }
+
+    void OnResumeButtonPress()
+    {
+        GameState.Instance.SetIsPaused(false);
     }
 
     void OnQuitButtonPress()
@@ -144,7 +150,7 @@ public class LvlOverlayUI : MonoBehaviour {
             testingData.isGameOver = false;
             testingData.isGamePaused = false;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameState.Instance.StartGame();
     }
 
     void OnGameOver()
@@ -251,8 +257,9 @@ public class LvlOverlayUI : MonoBehaviour {
         int points = 0;
         while (Application.isPlaying)
         {
-            points += UnityEngine.Random.Range(1, 6) * 100;
-            UpdatePointsVisual(points);
+            int scoreIncrease = UnityEngine.Random.Range(1, 6) * 100;
+            points += scoreIncrease;
+            UpdatePointsVisual((uint)points, (uint)scoreIncrease);
             yield return new WaitForSeconds(interval);
         }
     }

@@ -71,7 +71,7 @@ MonoBehaviour:
   UIDoc: {fileID: 4349036913200735125}
   sceneLoadOnQuit: MainMenuScene
   testingData:
-    IsTest: 1
+    IsTest: 0
     StartTime: 15
     isGamePaused: 0
     isGameOver: 0
