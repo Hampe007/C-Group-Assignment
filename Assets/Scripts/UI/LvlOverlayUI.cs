@@ -1,5 +1,4 @@
 using System.Collections;
-using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -211,7 +210,7 @@ public class LvlOverlayUI : MonoBehaviour {
     {
         float elapsed = 0;
 
-        // animationDuration corresponds to animation duration property of the visual element
+        // AnimationDuration corresponds to animation duration property of the visual element.
         float animationDuration = .35f;
         bool isFlashOn = false;
 
