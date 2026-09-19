@@ -20,7 +20,8 @@ static class ScoreClasses {
 [System.Serializable]
 struct TestingData
 {
-    public bool IsTest;
+    public bool TestTime;
+    public bool TestPoints;
     public float StartTime;
     public bool isGamePaused;
     public bool isGameOver;
@@ -60,10 +61,12 @@ public class LvlOverlayUI : MonoBehaviour {
 
     void Start()
     {
-        GameState.Instance.StartGame();
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             StartCoroutine(TimerTestRoutine(testingData.StartTime));
+        }
+        if (testingData.TestPoints)
+        {
             StartCoroutine(ScoreTestRoutine(2f));
         }
 
@@ -89,10 +92,6 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             OnGamePaused();
         }
-        else
-        {
-            OnGameResumed();
-        }
     }
 
     void Update()
@@ -108,7 +107,7 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             _timerFlashRoutineRef = StartCoroutine(TimerFlashRoutine(10));
         }
-        else if (testingData.IsTest && time <= 0)
+        else if (testingData.TestTime && time <= 0)
         {
             OnGameOver();
         }
@@ -135,7 +134,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     void OnQuitButtonPress()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
         }
@@ -144,7 +143,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     void OnRetryButtonPress()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
             testingData.isGameOver = false;
@@ -155,7 +154,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     void OnGameOver()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 0;
         }
@@ -165,7 +164,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     void OnGamePaused()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 0;
         }
@@ -178,7 +177,7 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             return;
         }
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
             testingData.isGamePaused = false;
@@ -259,7 +258,7 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             int scoreIncrease = UnityEngine.Random.Range(1, 6) * 100;
             points += scoreIncrease;
-            UpdatePointsVisual((uint)points, (uint)scoreIncrease);
+            UpdatePointsVisual((uint)scoreIncrease, (uint)points);
             yield return new WaitForSeconds(interval);
         }
     }

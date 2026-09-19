@@ -37,6 +37,10 @@ public class GameState : MonoBehaviour
     /// </summary>
     public void StartGame() {
         SceneManager.LoadScene(startScene);
+    }
+
+    public void Reset()
+    {
         Time.timeScale = 1f;
         this.playerScore = 0;
         this.isPlaying = true;
@@ -145,6 +149,11 @@ public class GameState : MonoBehaviour
         }
 
         DecrementTimer();
+    }
+
+    private void Start()
+    {
+        Reset();
     }
 
     /* OTHER PRIVATE METHODS */
