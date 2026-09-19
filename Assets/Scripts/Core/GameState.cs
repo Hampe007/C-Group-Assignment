@@ -3,12 +3,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class GameState : MonoBehaviour
+public class GameState : Singleton<GameState>
 {
-    public static GameState Instance { get; private set; }
-
     [SerializeField] InputActionReference pause;
-
     [SerializeField] private int startScene = 1;
     [Header("Player Settings")]
     [SerializeField] private uint playerScore = 0;
@@ -130,16 +127,6 @@ public class GameState : MonoBehaviour
     private void OnDisable() {
         pause.action.performed -= OnPause;
         pause.action.Enable();
-    }
-
-
-    private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
     }
 
     private void Update() {
