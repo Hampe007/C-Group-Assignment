@@ -100,7 +100,7 @@ Button:hover {
 
 .scoreRegular .pointsText {
     font-size: 43px;
-    color: rgba(255, 255, 255, 0.722);
+    color: rgba(255, 255, 255, 0.698);
     transition-timing-function: ease-in;
     transition-duration: 0.125s;
 }
@@ -111,8 +111,13 @@ Button:hover {
 }
 
 .scoreText {
-    color: rgba(20, 20, 20, 0.835);
+    color: rgba(255, 255, 255, 0.835);
     font-size: 35px;
     transition-timing-function: ease-in;
     transition-duration: 0.125s;
+}
+
+
+
+.pointsText {
 }
