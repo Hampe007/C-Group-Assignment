@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 public class SoundMenuUI : MonoBehaviour
 {
     [SerializeField] private UIDocument UIDoc;
+    [SerializeField] private SoundFXClip buttonPressSound;
     private Slider _masterSlider, _musicSlider, _soundFXSlider;
     private Button _soundOptionsButton, _returnButton;
     private VisualElement _mainContainer, _soundOptionsContainer;
@@ -27,9 +28,9 @@ public class SoundMenuUI : MonoBehaviour
 
     private void Start()
     {
-        _masterSlider.value = SoundMixerManager.Instance.MasterVolume;
-        _musicSlider.value = SoundMixerManager.Instance.MusicVolume;
-        _soundFXSlider.value = SoundMixerManager.Instance.SoundFXVolume;
+        _masterSlider.SetValueWithoutNotify(SoundMixerManager.Instance.MasterVolume);
+        _musicSlider.SetValueWithoutNotify(SoundMixerManager.Instance.MusicVolume);
+        _soundFXSlider.SetValueWithoutNotify(SoundMixerManager.Instance.SoundFXVolume);
     }
 
     private void OnMasterSliderValueChanged(float volume)
@@ -51,11 +52,13 @@ public class SoundMenuUI : MonoBehaviour
     {
         _mainContainer.visible = false;
         _soundOptionsContainer.visible = true;
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 
     private void OnReturnButtonPressed()
     {
         _soundOptionsContainer.visible = false;
         _mainContainer.visible = true;
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 }

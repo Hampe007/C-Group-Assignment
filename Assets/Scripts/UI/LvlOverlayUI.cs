@@ -29,6 +29,7 @@ public class LvlOverlayUI : MonoBehaviour {
     [SerializeField] private UIDocument UIDoc;
     [Tooltip("Which scene to load on quit button press")]
     [SerializeField] private string sceneLoadOnQuit;
+    [SerializeField] private SoundFXClip buttonPressSound;
     [SerializeField] private TestingData testingData;
     private VisualElement _timerElement, _scoreElement;
     private VisualElement _gamePausedMainContainer, _statsContainer;
@@ -128,6 +129,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     private void OnResumeButtonPress()
     {
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
         GameState.Instance.SetIsPaused(false);
     }
 
@@ -138,6 +140,8 @@ public class LvlOverlayUI : MonoBehaviour {
             Time.timeScale = 1;
         }
         SceneManager.LoadScene(sceneLoadOnQuit);
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        GameState.Instance.Reset();
     }
 
     private void OnRetryButtonPress()
@@ -148,6 +152,7 @@ public class LvlOverlayUI : MonoBehaviour {
             testingData.isGameOver = false;
             testingData.isGamePaused = false;
         }
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
         GameState.Instance.StartGame();
     }
 

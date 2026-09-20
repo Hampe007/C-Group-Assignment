@@ -6,6 +6,8 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
     const float MINIMUM_VOLUME_DB = -80f;
     [SerializeField] private AudioMixer audioMixer;
 
+    /* PUBLIC METHODS */
+
     /// <summary>
     /// Returns the volume value from the main mixer master channel mapped to a value between 0f and 100f.
     /// </summary>
@@ -68,6 +70,8 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
     {
         audioMixer.SetFloat("musicVolume", PercentToDecibel(level));
     }
+
+    /* PRIVATE METHODS */
 
     private float PercentToDecibel(float percent)
     {

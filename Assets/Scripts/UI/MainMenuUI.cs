@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 public class MainMenuUI : MonoBehaviour {
     [SerializeField] private UIDocument UIDoc;
+    [SerializeField] private SoundFXClip buttonPressSound;
     private Button _startButton, _quitButton;
 
     private void Awake()
@@ -17,11 +18,13 @@ public class MainMenuUI : MonoBehaviour {
     private void OnStartButtonPress()
     {
         GameState.Instance.StartGame();
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 
     private void OnQuitButtonPress()
     {
         Application.Quit();
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 
 }

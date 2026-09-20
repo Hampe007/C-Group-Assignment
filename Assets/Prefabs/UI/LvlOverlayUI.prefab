@@ -71,6 +71,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LvlOverlayUI
   UIDoc: {fileID: 4349036913200735125}
   sceneLoadOnQuit: MainMenuScene
+  buttonPressSound:
+    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
+    volume: 100
   testingData:
     TestTime: 0
     TestPoints: 0
@@ -90,3 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundMenuUI
   UIDoc: {fileID: 4349036913200735125}
+  buttonPressSound:
+    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
+    volume: 100
