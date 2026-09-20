@@ -26,6 +26,7 @@ public class GameState : Singleton<GameState>
     public UnityEvent GameOverEvent { get; } = new();
     public UnityEvent GamePausedEvent { get; } = new();
     public UnityEvent GameUnPausedEvent { get; } = new();
+    public UnityEvent GameResetEvent { get; } = new();
 
     /* PUBLIC METHODS */
 
@@ -34,6 +35,7 @@ public class GameState : Singleton<GameState>
     /// </summary>
     public void StartGame() {
         SceneManager.LoadScene(startScene);
+        Reset();
     }
 
     public void Reset()
@@ -42,7 +44,10 @@ public class GameState : Singleton<GameState>
         this.playerScore = 0;
         this.isPlaying = true;
         this.isGameOver = false;
+        this.isPaused = false;
         RestartTimer();
+
+        GameResetEvent.Invoke();
     }
 
 

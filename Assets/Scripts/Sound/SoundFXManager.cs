@@ -34,7 +34,7 @@ public class SoundFXManager : Singleton<SoundFXManager>
         audioSource.volume = Mathf.Log10(volume / 100 + 1);
         audioSource.Play();
 
-        float clipLength = audioSource.clip.length;
+        float clipLength = audioSource.clip.length + 1f;
 
         DontDestroyOnLoad(audioSource.gameObject);
         Destroy(audioSource.gameObject, clipLength);

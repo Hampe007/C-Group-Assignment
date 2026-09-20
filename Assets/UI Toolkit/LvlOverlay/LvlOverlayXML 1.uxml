@@ -1,4 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="SoundOptionsContainer" src="project://database/Assets/UI%20Toolkit/SoundOptionsMenu.uxml?fileID=9197481963319205126&amp;guid=420bed29f3ede8247b7af9fd00f02169&amp;type=3#SoundOptionsMenu"/>
     <Style src="project://database/Assets/UI%20Toolkit/UIStyle.uss?fileID=7433441132597879392&amp;guid=ade595b3343210b4186d64ecb9c8b9b6&amp;type=3#UIStyle"/>
     <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; align-content: flex-start; justify-content: flex-end;">
         <ui:VisualElement name="StatsContainer" style="position: relative; flex-direction: row; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; align-items: flex-end;">
@@ -42,16 +43,20 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="GamePausedOverlay" class="overlay" style="visibility: hidden; transition-duration: 0.125s;">
-        <ui:VisualElement name="UpperContainer" style="justify-content: flex-end;">
-            <ui:Label text="— PAUSED —" class="largeTextLabel"/>
-        </ui:VisualElement>
-        <ui:VisualElement name="LowerContainer">
-            <ui:VisualElement name="ButtonContainer">
-                <ui:Button text="RESUME" name="ResumeButton"/>
-                <ui:Button text="RETRY" name="RetryButton"/>
-                <ui:Button text="QUIT" name="QuitButton"/>
+    <ui:VisualElement name="GamePausedOverlay" class="overlay" style="visibility: hidden; transition-duration: 0.125s; display: flex;">
+        <ui:VisualElement name="MainContainer" style="flex-grow: 1; width: 100%; position: relative; height: 100%;">
+            <ui:VisualElement name="UpperContainer" style="justify-content: flex-end;">
+                <ui:Label text="— PAUSED —" class="largeTextLabel"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="LowerContainer">
+                <ui:VisualElement name="ButtonContainer">
+                    <ui:Button text="RESUME" name="ResumeButton"/>
+                    <ui:Button text="RETRY" name="RetryButton"/>
+                    <ui:Button text="Options" name="SoundOptionsButton"/>
+                    <ui:Button text="QUIT" name="QuitButton"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Instance template="SoundOptionsContainer" name="SoundOptionsContainer" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; visibility: hidden;"/>
     </ui:VisualElement>
 </ui:UXML>
