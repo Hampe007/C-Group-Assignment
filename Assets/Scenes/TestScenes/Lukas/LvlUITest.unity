@@ -3346,10 +3346,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3293912562421034382, guid: 02755222b8a12f040841d5c7b1b94356, type: 3}
-      propertyPath: testingData.TestPoints
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4141242672584116875, guid: 02755222b8a12f040841d5c7b1b94356, type: 3}
       propertyPath: m_Name
       value: LvlOverlayUI
