@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenuUI : MonoBehaviour {
-    [SerializeField] UIDocument UIDoc;
-    [Tooltip("Which scene to load on start button press")]
-    Button _startButton, _quitButton;
+    [SerializeField] private UIDocument UIDoc;
+    private Button _startButton, _quitButton;
 
-    void Awake()
+    private void Awake()
     {
         _startButton = UIDoc.rootVisualElement.Q<Button>("StartButton");
         _quitButton = UIDoc.rootVisualElement.Q<Button>("QuitButton");
@@ -16,12 +14,12 @@ public class MainMenuUI : MonoBehaviour {
         _quitButton.clicked += OnQuitButtonPress;
     }
 
-    void OnStartButtonPress()
+    private void OnStartButtonPress()
     {
         GameState.Instance.StartGame();
     }
 
-    void OnQuitButtonPress()
+    private void OnQuitButtonPress()
     {
         Application.Quit();
     }
