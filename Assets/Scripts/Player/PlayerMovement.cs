@@ -5,7 +5,8 @@ public enum PlayerState
     GROUNDED = 0,
     AIRBORNE = 1,
     SLIDING = 2,
-    SLIDE_JUMP = 3
+    SLIDE_JUMP = 3,
+    WALL_RUNNING=4
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpStrength;
     [SerializeField] private float groundDrag;
     [SerializeField] private float airDrag;
-    [SerializeField] private float slopeDrag;
+    [SerializeField] private float slideDrag;
     [SerializeField] private float airMultiplier;
     [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float slopeAcceleration;
@@ -54,10 +55,14 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit slopeHit;
     float slopeAngle;
 
+    float inputLockTime;
+
+    RaycastHit wallHit;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        isRunPressed = true;
     }
 
     private void Start()
@@ -74,41 +79,74 @@ public class PlayerMovement : MonoBehaviour
 
         //Debug.Log($"moveInput: {moveInput}, isRunning: {isRunPressed}, isSliding: {isSlidePressed}");
     }
-
-    public void TriggerJump() {
+ 
+    public void TriggerJump()
+    {
         if (airJumps <= 0 && (currentState == PlayerState.AIRBORNE || currentState == PlayerState.SLIDE_JUMP))
             return;
 
         if (currentState == PlayerState.AIRBORNE || currentState == PlayerState.SLIDE_JUMP)
             airJumps--;
 
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpStrength, rb.linearVelocity.z);
+        if (currentState == PlayerState.WALL_RUNNING) //wall jump
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x + (wallHit.normal.x * jumpStrength), jumpStrength, rb.linearVelocity.z + (wallHit.normal.z * jumpStrength));
+            inputLockTime = 0.3f;
+        }
+        else  rb.linearVelocity = new Vector3 (rb.linearVelocity.x, jumpStrength, rb.linearVelocity.z); //regular jump
     }
-
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+        
         if (GameState.Instance != null && !GameState.Instance.IsPlayerInControl())
             return;
-        
+
         if (isClimbing)
             return;
-
+        
         MovePlayer();
         SpeedControl();
     }
 
-    bool IsOnSlope() {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, groundCheckDistance, groundLayerMask)) {
+    bool IsOnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, groundCheckDistance, groundLayerMask))
+        {
             slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
 
             if (slopeAngle < maxSlopeAngle && slopeAngle != 0)
                 return true;
+            
         }
-
         return false;
     }
+  
+    void StartWallRun()
+    {
+        if (rb.linearVelocity.y < 0) rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+    }
+    bool CanWallRun()
+    {
+        if (moveInput.x == 0 || currentState == PlayerState.GROUNDED || currentState == PlayerState.SLIDING) return false;
+        RaycastHit tryHit;
+        if (Physics.Raycast(transform.position, transform.right * Mathf.Sign(moveInput.x), out tryHit, 1.3f, groundLayerMask))
+        {
+            wallHit = tryHit;
+            return true;
+        }
+        return false;
+    }
+    Vector3 WallForward()
+    {
+        Vector3 forward = Vector3.Cross(transform.up, wallHit.normal);
+        if ((transform.forward - forward).magnitude > (transform.forward - -forward).magnitude) forward = -forward;
+        return forward;
+    }
 
-    bool CanExitSlide() {
-        return !Physics.Raycast(transform.position, Vector3.up, groundCheckDistance, groundLayerMask);
+    bool CanExitSlide()
+    {
+        return !Physics.
+            Raycast(transform.position, Vector3.up, groundCheckDistance, groundLayerMask);
     }
 
     void SetPlayerState() {
@@ -121,20 +159,23 @@ public class PlayerMovement : MonoBehaviour
             groundCheckDistance,
             groundLayerMask);
 
-        //bool slidePressed = slide.action.phase == InputActionPhase.Performed;
-
+        if (CanWallRun())
+        {
+            if (currentState != PlayerState.WALL_RUNNING) StartWallRun();
+            currentState = PlayerState.WALL_RUNNING;
+            return;
+        }
         if (isGrounded)
         {
-            /*if (slidePressed)
+            //Debug.Log("GROUNDED");
+            if (isSlidePressed)
             {
                 currentState = PlayerState.SLIDING;
             }
             else
             {
                 currentState = PlayerState.GROUNDED;
-            }*/
-
-            currentState = isSlidePressed ? PlayerState.SLIDING : PlayerState.GROUNDED;
+            }
         }
         else if ((currentState == PlayerState.SLIDING || currentState == PlayerState.SLIDE_JUMP) &&
                  flatVel.magnitude > runMaxSpeed)
@@ -176,13 +217,16 @@ public class PlayerMovement : MonoBehaviour
 
         maxSpeed = isRunPressed ? runMaxSpeed : walkMaxSpeed;
 
-        switch (currentState) {
+        switch (currentState)
+        {
             case PlayerState.GROUNDED:
                 rb.linearDamping = groundDrag;
                 airJumps = maxAirJumps;
                 break;
 
             case PlayerState.AIRBORNE:
+                rb.linearDamping = airDrag;
+                rb.linearVelocity += Vector3.down * gravityScale;
                 break;
 
             case PlayerState.SLIDE_JUMP:
@@ -191,8 +235,15 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case PlayerState.SLIDING:
-                rb.linearDamping = slopeDrag;
+                rb.linearDamping = slideDrag;
                 airJumps = maxAirJumps;
+                break;
+            case PlayerState.WALL_RUNNING:
+                rb.linearDamping = airDrag;
+                airJumps = maxAirJumps;
+                rb.linearVelocity += WallForward() * 2;
+                rb.linearVelocity += Vector3.down * (gravityScale / 4);
+                moveInput.y = 0;
                 break;
 
             default:
@@ -202,6 +253,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = transform.forward * moveInput.y;
         Vector3 right = transform.right * moveInput.x;
         moveDirection = (forward + right).normalized;
+        if (inputLockTime > 0)
+        {
+            inputLockTime -= Time.fixedDeltaTime;
+            moveDirection = Vector3.zero;
+        }
 
         if (currentState == PlayerState.SLIDING)
             moveDirection = Vector3.zero;
@@ -214,20 +270,26 @@ public class PlayerMovement : MonoBehaviour
         if (flatVel.magnitude > maxSpeed && currentState == PlayerState.SLIDE_JUMP)
             multiplier = .3f;
 
-        if(moveDirection.sqrMagnitude > 0.01f) {
+       
             Vector3 targetVelocity = moveDirection * acceleration;
 
-            if (IsOnSlope()) {
-                if (currentState == PlayerState.SLIDING) {
+            if (IsOnSlope())
+            {
+                print("sloåe");
+                if (currentState == PlayerState.SLIDING)
+                {
+                    print("slopeaccel");
                     targetVelocity += SlopeAcceleration();
-                } else {
+                }
+                else
+                {
                     targetVelocity = Vector3.ProjectOnPlane(moveDirection,
                         slopeHit.normal).normalized * acceleration;
                 }
             }
-            
+
             rb.linearVelocity += targetVelocity * multiplier;
-        } /*else if (currentState == PlayerState.GROUNDED) {
+         /*else if (currentState == PlayerState.GROUNDED) {
             // Actively decelerate flat velocity when no keys are pressed
             flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
             flatVel = Vector3.Lerp(flatVel, Vector3.zero, groundDrag * Time.fixedDeltaTime);
@@ -244,7 +306,8 @@ public class PlayerMovement : MonoBehaviour
                * angleMultiplier;
     }
 
-    void SpeedControl() {
+    void SpeedControl()
+    {
         if (currentState == PlayerState.SLIDING || currentState == PlayerState.SLIDE_JUMP)
             return;
 
@@ -260,8 +323,9 @@ public class PlayerMovement : MonoBehaviour
                 flatVelocity.z);
         }
     }
-      
-    public void SetClimbing(bool climbing) {
+
+    public void SetClimbing(bool climbing)
+    {
         isClimbing = climbing;
     }
 
