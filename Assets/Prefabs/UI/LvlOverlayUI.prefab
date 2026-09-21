@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2578625286739076824}
   - component: {fileID: 4349036913200735125}
   - component: {fileID: 3293912562421034382}
+  - component: {fileID: 8706923737185819596}
   m_Layer: 5
   m_Name: LvlOverlayUI
   m_TagString: Untagged
@@ -70,8 +71,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LvlOverlayUI
   UIDoc: {fileID: 4349036913200735125}
   sceneLoadOnQuit: MainMenuScene
+  buttonPressSound:
+    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
+    volume: 100
   testingData:
-    IsTest: 1
+    TestTime: 0
+    TestPoints: 0
     StartTime: 15
     isGamePaused: 0
     isGameOver: 0
+--- !u!114 &8706923737185819596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4141242672584116875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8935ba8b1e0b042afa9a0ed254fcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundMenuUI
+  UIDoc: {fileID: 4349036913200735125}
+  buttonPressSound:
+    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
+    volume: 100

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4480055486332390450
+--- !u!1 &4794093290426160300
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4881534558409983683}
-  - component: {fileID: 2121633403135717911}
+  - component: {fileID: 1816213639286929677}
+  - component: {fileID: 2860890054602561078}
   m_Layer: 0
-  m_Name: GameState
+  m_Name: SoundMixerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4881534558409983683
+--- !u!4 &1816213639286929677
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4480055486332390450}
+  m_GameObject: {fileID: 4794093290426160300}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,19 +32,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2121633403135717911
+--- !u!114 &2860890054602561078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4480055486332390450}
+  m_GameObject: {fileID: 4794093290426160300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd83cb8f99f601d4c9e6d9594095610a, type: 3}
+  m_Script: {fileID: 11500000, guid: 59d7e6624702ef7499e7d343921ee2e6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameState
-  pause: {fileID: -8747849590089934428, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  startScene: 2
-  playerScore: 0
-  startingTime: 60
+  m_EditorClassIdentifier: Assembly-CSharp::SoundMixerManager
+  audioMixer: {fileID: 24100000, guid: 5b44ed791d0c9a04fbb5d5a12b64c0bc, type: 2}

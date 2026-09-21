@@ -1,14 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenuUI : MonoBehaviour {
-    [SerializeField] UIDocument UIDoc;
-    [Tooltip("Which scene to load on start button press")]
-    [SerializeField] string sceneLoadOnStart;
-    Button _startButton, _quitButton;
+    [SerializeField] private UIDocument UIDoc;
+    [SerializeField] private SoundFXClip buttonPressSound;
+    private Button _startButton, _quitButton;
 
-    void Awake()
+    private void Awake()
     {
         _startButton = UIDoc.rootVisualElement.Q<Button>("StartButton");
         _quitButton = UIDoc.rootVisualElement.Q<Button>("QuitButton");
@@ -17,19 +15,16 @@ public class MainMenuUI : MonoBehaviour {
         _quitButton.clicked += OnQuitButtonPress;
     }
 
-    void OnStartButtonPress()
+    private void OnStartButtonPress()
     {
-        if (sceneLoadOnStart.Length == 0)
-        {
-            Debug.LogError($"Empty string. Enter a scene to load in the inspector for {name}.");
-            return;
-        }
-        SceneManager.LoadScene(sceneLoadOnStart);
+        GameState.Instance.StartGame();
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 
-    void OnQuitButtonPress()
+    private void OnQuitButtonPress()
     {
         Application.Quit();
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
     }
 
 }

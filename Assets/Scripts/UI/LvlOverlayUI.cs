@@ -1,5 +1,4 @@
 using System.Collections;
-using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -20,23 +19,25 @@ static class ScoreClasses {
 [System.Serializable]
 struct TestingData
 {
-    public bool IsTest;
+    public bool TestTime;
+    public bool TestPoints;
     public float StartTime;
     public bool isGamePaused;
     public bool isGameOver;
 }
 public class LvlOverlayUI : MonoBehaviour {
-    [SerializeField] UIDocument UIDoc;
+    [SerializeField] private UIDocument UIDoc;
     [Tooltip("Which scene to load on quit button press")]
-    [SerializeField] string sceneLoadOnQuit;
-    [SerializeField] TestingData testingData;
-    VisualElement _timerElement, _scoreElement;
-    VisualElement _statsContainer;
-    VisualElement _gameOverOverlay, _gamePausedOverlay;
-    Label _timerLabel, _pointsLabel, _largePointsLabel;
-    Coroutine _timerFlashRoutineRef;
+    [SerializeField] private string sceneLoadOnQuit;
+    [SerializeField] private SoundFXClip buttonPressSound;
+    [SerializeField] private TestingData testingData;
+    private VisualElement _timerElement, _scoreElement;
+    private VisualElement _gamePausedMainContainer, _statsContainer;
+    private VisualElement _gameOverOverlay, _gamePausedOverlay;
+    private Label _timerLabel, _pointsLabel, _largePointsLabel;
+    private Coroutine _timerFlashRoutineRef;
 
-    void Awake()
+    private void Awake()
     {
         _timerElement = UIDoc.rootVisualElement.Q<VisualElement>("TimerElement");
         _timerLabel = UIDoc.rootVisualElement.Q<Label>("TimerLabel");
@@ -46,6 +47,7 @@ public class LvlOverlayUI : MonoBehaviour {
         _largePointsLabel = UIDoc.rootVisualElement.Q<Label>("LargePointsLabel");
         _gameOverOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GameOverOverlay");
         _gamePausedOverlay = UIDoc.rootVisualElement.Q<VisualElement>("GamePausedOverlay");
+        _gamePausedMainContainer = UIDoc.rootVisualElement.Q<VisualElement>("MainContainer");
 
         UIDoc.rootVisualElement.Query<Button>("RetryButton").ForEach(button =>
         {
@@ -55,26 +57,28 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             button.clicked += OnQuitButtonPress;
         });;
-        UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnGameResumed; // TODO: invoke ResumeGame method from public class
-
-        // TODO: subscribe UpdateTimerVisual to UnityEvent/class which returns the actual timer
-        // TODO: subscribe UpdatePointsVisual to UnityEvent/class which returns the actual score
-        // TODO: subscribe OnGamePaused to UnityEvent/game state class which tells when the game is paused
-        // TODO: subscribe OnGameResumed to UnityEvent/game state class which tells when the game is resumed/not paused
-        // TODO: subscribe OnGameOver to UnityEvent/game state class which tells when the game is over
+        UIDoc.rootVisualElement.Q<Button>("ResumeButton").clicked += OnResumeButtonPress;
     }
 
-    void Start()
+    private void Start()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             StartCoroutine(TimerTestRoutine(testingData.StartTime));
+        }
+        if (testingData.TestPoints)
+        {
             StartCoroutine(ScoreTestRoutine(2f));
         }
+
         StartCoroutine(TimerEmphasizeRoutine());
+        GameState.Instance.ScoreChangeEvent.AddListener(UpdatePointsVisual);
+        GameState.Instance.GamePausedEvent.AddListener(OnGamePaused);
+        GameState.Instance.GameUnPausedEvent.AddListener(OnGameResumed);
+        GameState.Instance.GameOverEvent.AddListener(OnGameOver);
     }
 
-    void OnValidate()
+    private void OnValidate()
     {
         if (!Application.isPlaying)
         {
@@ -89,25 +93,21 @@ public class LvlOverlayUI : MonoBehaviour {
         {
             OnGamePaused();
         }
-        else
-        {
-            OnGameResumed();
-        }
     }
 
-    void GetElementRefs()
+    private void Update()
     {
-
+        UpdateTimerVisual(GameState.Instance.TimeRemaining);
     }
 
 
-    void UpdateTimerVisual(float time)
+    private void UpdateTimerVisual(float time)
     {
         if (_timerFlashRoutineRef == null && time <= 10  && time > 0)
         {
             _timerFlashRoutineRef = StartCoroutine(TimerFlashRoutine(10));
         }
-        else if (testingData.IsTest && time <= 0)
+        else if (testingData.TestTime && time <= 0)
         {
             OnGameOver();
         }
@@ -120,36 +120,45 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerLabel.text = $"{minutesText}:{secondsText}";
     }
 
-    void UpdatePointsVisual(int points)
+    private void UpdatePointsVisual(uint scoreIncrease, uint newScore)
     {
         StartCoroutine(ScoreEmphasizeRoutine());
-        _pointsLabel.text = points.ToString();
-        _largePointsLabel.text = _pointsLabel.text = points.ToString();
+        _pointsLabel.text = newScore.ToString();
+        _largePointsLabel.text = _pointsLabel.text = newScore.ToString();
     }
 
-    void OnQuitButtonPress()
+    private void OnResumeButtonPress()
     {
-        if (testingData.IsTest)
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        GameState.Instance.SetIsPaused(false);
+    }
+
+    private void OnQuitButtonPress()
+    {
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
         }
         SceneManager.LoadScene(sceneLoadOnQuit);
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        GameState.Instance.Reset();
     }
 
-    void OnRetryButtonPress()
+    private void OnRetryButtonPress()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
             testingData.isGameOver = false;
             testingData.isGamePaused = false;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        GameState.Instance.StartGame();
     }
 
-    void OnGameOver()
+    private void OnGameOver()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 0;
         }
@@ -157,30 +166,32 @@ public class LvlOverlayUI : MonoBehaviour {
         _statsContainer.visible = false;
     }
 
-    void OnGamePaused()
+    private void OnGamePaused()
     {
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 0;
         }
+        _gamePausedMainContainer.visible = true;
         _gamePausedOverlay.visible = true;
     }
 
-    void OnGameResumed()
+    private void OnGameResumed()
     {
         if (_gamePausedOverlay == null)
         {
             return;
         }
-        if (testingData.IsTest)
+        if (testingData.TestTime)
         {
             Time.timeScale = 1;
             testingData.isGamePaused = false;
         }
+        _gamePausedMainContainer.visible = false;
         _gamePausedOverlay.visible = false;
     }
 
-    IEnumerator ScoreEmphasizeRoutine()
+    private IEnumerator ScoreEmphasizeRoutine()
     {
         _scoreElement.AddToClassList(ScoreClasses.Emphasized);
         _scoreElement.RemoveFromClassList(ScoreClasses.Regular);
@@ -191,7 +202,7 @@ public class LvlOverlayUI : MonoBehaviour {
         _scoreElement.RemoveFromClassList(ScoreClasses.Emphasized);
     }
 
-    IEnumerator TimerEmphasizeRoutine()
+    private IEnumerator TimerEmphasizeRoutine()
     {
         _timerElement.AddToClassList(TimerClasses.Emphasized);
         _timerElement.RemoveFromClassList(TimerClasses.Regular);
@@ -202,11 +213,11 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerElement.RemoveFromClassList(TimerClasses.Emphasized);
     }
 
-    IEnumerator TimerFlashRoutine(float duration)
+    private IEnumerator TimerFlashRoutine(float duration)
     {
         float elapsed = 0;
 
-        // animationDuration corresponds to animation duration property of the visual element
+        // AnimationDuration corresponds to animation duration property of the visual element.
         float animationDuration = .35f;
         bool isFlashOn = false;
 
@@ -232,8 +243,7 @@ public class LvlOverlayUI : MonoBehaviour {
         _timerFlashRoutineRef = null;
     }
 
-    // timer for testing purposes
-    IEnumerator TimerTestRoutine(float totalTime)
+    private IEnumerator TimerTestRoutine(float totalTime)
     {
         float startTime = Time.time;
         float elapsed = 0;
@@ -246,13 +256,14 @@ public class LvlOverlayUI : MonoBehaviour {
         }
     }
 
-    IEnumerator ScoreTestRoutine(float interval)
+    private IEnumerator ScoreTestRoutine(float interval)
     {
         int points = 0;
         while (Application.isPlaying)
         {
-            points += UnityEngine.Random.Range(1, 6) * 100;
-            UpdatePointsVisual(points);
+            int scoreIncrease = UnityEngine.Random.Range(1, 6) * 100;
+            points += scoreIncrease;
+            UpdatePointsVisual((uint)scoreIncrease, (uint)points);
             yield return new WaitForSeconds(interval);
         }
     }
