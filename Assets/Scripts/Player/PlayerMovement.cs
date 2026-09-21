@@ -72,8 +72,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Called continuously by PlayerController to update movement inputs.
-    public void SetInputValues(Vector2 inputVector, bool running, bool sliding)
-    {
+    public void SetInputValues(Vector2 inputVector, bool running, bool sliding) {
         moveInput = inputVector;
         isRunPressed = running;
         isSlidePressed = sliding;
@@ -150,8 +149,7 @@ public class PlayerMovement : MonoBehaviour
             Raycast(transform.position, Vector3.up, groundCheckDistance, groundLayerMask);
     }
 
-    void SetPlayerState()
-    {
+    void SetPlayerState() {
         Vector3 flatVel = rb.linearVelocity;
         flatVel.y = 0;
 
@@ -300,8 +298,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log($"rb.linearVelocity: {rb.linearVelocity}");
     }
 
-    Vector3 SlopeAcceleration()
-    {
+    Vector3 SlopeAcceleration() {
         float angleMultiplier = Mathf.Sin(slopeAngle * Mathf.Deg2Rad);
 
         return Vector3.ProjectOnPlane(Vector3.down, slopeHit.normal).normalized
