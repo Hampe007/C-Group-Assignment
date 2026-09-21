@@ -4,16 +4,12 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private InputActionReference interact;
-
     private PlayerInteractZone interactZone;
 
-    private void Awake()
-    {
+    private void Awake() {
         interactZone = GetComponentInChildren<PlayerInteractZone>(true);
 
-        if (interactZone == null)
-        {
+        if (interactZone == null) {
             Debug.LogError(
                 $"{nameof(PlayerInteraction)} requires a {nameof(PlayerInteractZone)} " +
                 "somewhere under the Player hierarchy.",
@@ -21,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         if (interact == null || interact.action == null)
         {
@@ -83,6 +79,44 @@ public class PlayerInteraction : MonoBehaviour
 
             if (!Inventory.Instance.AddCollectable(collectableData))
             {
+                return;
+            }
+
+            collectableCollider.enabled = false;
+            interactZone.PickedUpInteractable();
+            return;
+        }
+
+        // DropOffChest and any future non-collectable interactables handle
+        // their own behaviour in Interact().
+        interactable.Interact();
+    }*/
+
+    public void TriggerInteract() {
+        if (interactZone == null) { return; }
+
+        Interactable interactable = interactZone.GetLastInteractable();
+
+        if (interactable == null) { return; }
+
+        if (interactable is InteractableCollectable collectable) {
+            Collider collectableCollider = collectable.GetComponent<Collider>();
+
+            // Prevent the same collectable being added twice before it is destroyed.
+            if (collectableCollider == null || !collectableCollider.enabled) {
+                return;
+            }
+
+            if (Inventory.Instance == null) {
+                Debug.LogWarning("No Inventory instance exists in the scene.", this);
+                return;
+            }
+
+            if (collectable.Interact() is not SO_InteractableCollectableData collectableData) {
+                return;
+            }
+
+            if (!Inventory.Instance.AddCollectable(collectableData)) {
                 return;
             }
 
