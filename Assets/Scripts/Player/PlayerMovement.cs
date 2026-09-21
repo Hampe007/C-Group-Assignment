@@ -275,10 +275,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (IsOnSlope())
             {
-                print("sloåe");
                 if (currentState == PlayerState.SLIDING)
                 {
-                    print("slopeaccel");
                     targetVelocity += SlopeAcceleration();
                 }
                 else
