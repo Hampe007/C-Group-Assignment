@@ -3,10 +3,7 @@ using UnityEngine.Audio;
 
 public class SoundMixerManager : Singleton<SoundMixerManager>
 {
-    const float MINIMUM_VOLUME_DB = -80f;
     [SerializeField] private AudioMixer audioMixer;
-
-    /* PUBLIC METHODS */
 
     /// <summary>
     /// Returns the volume value from the main mixer master channel mapped to a value between 0f and 100f.
@@ -16,7 +13,7 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
         get
         {
             audioMixer.GetFloat("masterVolume", out float volume);
-            return DecibelToPercent(volume);
+            return AudioUtils.DecibelToPercent(volume);
         }
     }
 
@@ -28,7 +25,7 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
         get
         {
             audioMixer.GetFloat("soundFXVolume", out float volume);
-            return DecibelToPercent(volume);
+            return AudioUtils.DecibelToPercent(volume);
         }
     }
 
@@ -40,60 +37,34 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
         get
         {
             audioMixer.GetFloat("musicVolume", out float volume);
-            return DecibelToPercent(volume);
+            return AudioUtils.DecibelToPercent(volume);
         }
     }
 
     /// <summary>
     /// Set the master volume. Expects a value between 0f and 100f.
     /// </summary>
-    /// <param name="level"></param>
-    public void SetMasterVolume(float level)
+    /// <param name="percent"></param>
+    public void SetMasterVolume(float percent)
     {
-        audioMixer.SetFloat("masterVolume", PercentToDecibel(level));
+        audioMixer.SetFloat("masterVolume", AudioUtils.PercentToDecibel(percent));
     }
 
     /// <summary>
     /// Set the soundFX volume. Expects a value between 0f and 100f.
     /// </summary>
-    /// <param name="level"></param>
-    public void SetSoundFXVolume(float level)
+    /// <param name="percent"></param>
+    public void SetSoundFXVolume(float percent)
     {
-        audioMixer.SetFloat("soundFXVolume", PercentToDecibel(level));
+        audioMixer.SetFloat("soundFXVolume", AudioUtils.PercentToDecibel(percent));
     }
 
     /// <summary>
     /// Set the music volume. Expects a value between 0f and 100f.
     /// </summary>
-    /// <param name="level"></param>
-    public void SetMusicVolume(float level)
+    /// <param name="percent"></param>
+    public void SetMusicVolume(float percent)
     {
-        audioMixer.SetFloat("musicVolume", PercentToDecibel(level));
-    }
-
-    /* PRIVATE METHODS */
-
-    private float PercentToDecibel(float percent)
-    {
-        percent = Mathf.Clamp(percent, 0f, 100f);
-
-        if (percent <= 0f)
-        {
-            return MINIMUM_VOLUME_DB;
-        }
-
-        float linear = percent / 100f;
-        return Mathf.Log10(linear) * 20f;
-    }
-
-    private float DecibelToPercent(float db)
-    {
-        if (db <= MINIMUM_VOLUME_DB)
-        {
-            return 0f;
-        }
-
-        float linear = Mathf.Pow(10f, db / 20f);
-        return linear * 100f;
+        audioMixer.SetFloat("musicVolume", AudioUtils.PercentToDecibel(percent));
     }
 }
