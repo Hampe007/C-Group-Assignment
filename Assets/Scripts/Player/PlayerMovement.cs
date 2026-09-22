@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slopeAcceleration;
 
     [SerializeField] private int maxAirJumps;
+
+    private float maxSpeedDecreaseGround=0.3f;
+    private float maxSpeedDecreaseAir=0.1f;
     private int airJumps;
     private float maxSpeed;
 
@@ -60,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     float inputLockTime;
 
     RaycastHit wallHit;
+    float wallGravityMultiplier=0.25f;
     int wallDir;
     private void Awake()
     {
@@ -221,10 +225,10 @@ public class PlayerMovement : MonoBehaviour
             maxSpeed = isRunPressed ? runMaxSpeed : walkMaxSpeed;
        
         else if (currentState == PlayerState.GROUNDED) 
-            maxSpeed -= 0.4f;
+            maxSpeed -=maxSpeedDecreaseGround;
         
         else if (currentState == PlayerState.AIRBORNE&&maxSpeed>runMaxSpeed)
-            maxSpeed -= 0.2f;
+            maxSpeed -= maxSpeedDecreaseAir;
        
         if (isRunPressed && maxSpeed < runMaxSpeed)
             maxSpeed = runMaxSpeed;
@@ -261,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearDamping = airDrag;
                 airJumps = maxAirJumps;
                 rb.linearVelocity += WallForward() * 2;
-                rb.linearVelocity += Vector3.down * (gravityScale / 4);
+                rb.linearVelocity += Vector3.down * (gravityScale * wallGravityMultiplier);
                 if (wallDir == Math.Sign(moveInput.x)&&inputLockTime<=0) rb.linearVelocity += -wallHit.normal*10;
                 moveInput.y = 0;
                 break;

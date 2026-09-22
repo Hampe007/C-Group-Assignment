@@ -967,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6027750642664810778, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: acceleration
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6027750642664810778, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
       propertyPath: walkMaxSpeed
