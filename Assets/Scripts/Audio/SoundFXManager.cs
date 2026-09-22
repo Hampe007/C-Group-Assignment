@@ -1,18 +1,10 @@
 using UnityEngine;
 
-/// <summary>
-/// Use this as instead of AudioClip to associate a specific volume with an AudioClip
-/// </summary>
-[System.Serializable]
-public struct SoundFXClip
-{
-    public AudioClip audioClip;
-    [Range(0, 100)] public float volume;
-}
-
 public class SoundFXManager : Singleton<SoundFXManager>
 {
     [SerializeField] private AudioSource soundFXObject;
+    [SerializeField] private SO_SoundFXSettingsData settings;
+    public SO_SoundFXSettingsData SoundEffects => settings;
     private AudioSource repeatSource = null;
     private float _timer = 0f;
     private float _repeatDelay = 0f;
@@ -85,6 +77,12 @@ public class SoundFXManager : Singleton<SoundFXManager>
 
     /* MONOBEHAVIOR LIFECYCLE METHODS */
 
+    private void Start()
+    {
+        GameState.Instance.TimerTickEvent.AddListener(OnTimerTick);
+        GameState.Instance.GameOverEvent.AddListener(OnGameOver);
+    }
+
     private void Update()
     {
         if (_timer <= 0 && _iterationsLeft > 0)
@@ -95,5 +93,20 @@ public class SoundFXManager : Singleton<SoundFXManager>
         }
 
         _timer -= Time.deltaTime;
+    }
+
+    /* PRIVATE METHODS */
+
+    private void OnTimerTick(float timeLeft)
+    {
+        if (timeLeft > 0 &&  timeLeft < 10)
+        {
+            PlaySoundFXClip(settings.timerBeepSound.audioClip, transform, settings.timerBeepSound.volume);
+        }
+    }
+
+    private void OnGameOver()
+    {
+        PlaySoundFXClip(settings.gameOverSound.audioClip, transform, settings.gameOverSound.volume);
     }
 }

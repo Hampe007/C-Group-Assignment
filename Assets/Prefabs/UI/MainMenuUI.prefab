@@ -70,9 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
   UIDoc: {fileID: 3240599658072842904}
-  buttonPressSound:
-    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
-    volume: 100
+  buttonPressSound: {fileID: 11400000, guid: cb49e26f6951e2a4993f84b51c345dc1, type: 2}
 --- !u!114 &2259208033797783677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +84,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundMenuUI
   UIDoc: {fileID: 3240599658072842904}
-  buttonPressSound:
-    audioClip: {fileID: 8300000, guid: 658be94ac7911914daf8e969c669dce2, type: 3}
-    volume: 100
+  buttonPressSound: {fileID: 11400000, guid: cb49e26f6951e2a4993f84b51c345dc1, type: 2}

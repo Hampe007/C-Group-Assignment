@@ -33,11 +33,6 @@ public class BackgroundMusic : MonoBehaviour
     /// <param name="delay"></param>
     public void Play(float delay)
     {
-        if (_audioSource.isPlaying)
-        {
-            return;
-        }
-
         StartCoroutine(PlayRoutine(delay));
     }
 

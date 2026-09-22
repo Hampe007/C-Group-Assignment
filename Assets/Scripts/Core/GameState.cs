@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
@@ -7,11 +8,15 @@ public class GameState : Singleton<GameState>
 {
     [SerializeField] InputActionReference pause;
     [SerializeField] private int startScene = 1;
+
     [Header("Player Settings")]
     [SerializeField] private uint playerScore = 0;
+
     [Header("Timer Settings")]
     [SerializeField] private float startingTime = 60f;
     private float timeRemaining;
+    private Coroutine timerCoroutine;
+
     private bool isPlaying = false;
     private bool isGameOver = false;
     private bool isPaused = false;
@@ -27,13 +32,15 @@ public class GameState : Singleton<GameState>
     public UnityEvent GamePausedEvent { get; } = new();
     public UnityEvent GameUnPausedEvent { get; } = new();
     public UnityEvent GameResetEvent { get; } = new();
+    public UnityEvent<float> TimerTickEvent { get; } = new(); // Sends the time remaining every whole second.
 
     /* PUBLIC METHODS */
 
     /// <summary>
     /// Loads the main scene and resets the game state. Effectively reloads the level.
     /// </summary>
-    public void StartGame() {
+    public void StartGame()
+    {
         SceneManager.LoadScene(startScene);
         Reset();
     }
@@ -41,33 +48,36 @@ public class GameState : Singleton<GameState>
     public void Reset()
     {
         Time.timeScale = 1f;
+
         this.playerScore = 0;
         this.isPlaying = true;
         this.isGameOver = false;
         this.isPaused = false;
+
         RestartTimer();
 
         GameResetEvent.Invoke();
     }
 
-
     /// <summary>
     /// Sets Time.timeScale to 0f and notifies other components that the game is over.
     /// </summary>
-    public void GameOver() {
+    public void GameOver()
+    {
         Time.timeScale = 0f;
         this.isGameOver = true;
 
-        GameOverEvent.Invoke();
+        StopTimer();
 
-        Debug.Log("Game Over!");
+        GameOverEvent.Invoke();
     }
 
     /// <summary>
     /// Increments the player score and notifies other components by what value and the resultant score.
     /// </summary>
     /// <param name="value">The number of points to increase the score by.</param>
-    public void AddPlayerScore(uint value) {
+    public void AddPlayerScore(uint value)
+    {
         this.playerScore += value;
 
         ScoreChangeEvent.Invoke(value, this.playerScore);
@@ -77,7 +87,8 @@ public class GameState : Singleton<GameState>
     /// Increments the player score based off the SO_InteractableCollectableData and notifies other components by what value and the resultant score.
     /// </summary>
     /// <param name="data">The interactable from which to extract points.</param>
-    public void AddPlayerScore(SO_InteractableCollectableData data) {
+    public void AddPlayerScore(SO_InteractableCollectableData data)
+    {
         uint value = data.GetCollectableValue();
         this.playerScore += value;
 
@@ -85,9 +96,11 @@ public class GameState : Singleton<GameState>
     }
 
     /// <summary>
-    /// Pauses the game if set to true or else resumes the game if set to false, while also notifying other components.
+    /// Pauses the game if set to true or else resumes the game if set to false,
+    /// while also notifying other components.
     /// </summary>
-    public void SetIsPaused(bool isPaused) {
+    public void SetIsPaused(bool isPaused)
+    {
         if (this.isGameOver)
         {
             return; // Can't pause if the game is already over
@@ -118,29 +131,25 @@ public class GameState : Singleton<GameState>
     /// <summary>
     /// Returns true if the game is ongoing AND the game is NOT over or NOT paused and vice versa.
     /// </summary>
-    public bool IsPlayerInControl() {
+    public bool IsPlayerInControl()
+    {
         return (this.isPlaying && !(this.isGameOver || this.isPaused));
     }
 
     /* MONOBEHAVIOR LIFECYCLE METHODS */
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         pause.action.Enable();
         pause.action.performed += OnPause;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         pause.action.performed -= OnPause;
-        pause.action.Enable();
-    }
+        pause.action.Disable();
 
-    private void Update() {
-        if (!IsPlayerInControl())
-        {
-            return;
-        }
-
-        DecrementTimer();
+        StopTimer();
     }
 
     private void Start()
@@ -150,32 +159,66 @@ public class GameState : Singleton<GameState>
 
     /* OTHER PRIVATE METHODS */
 
-    private void EndGame() {
+    private void EndGame()
+    {
         Time.timeScale = 0f;
         this.isPlaying = false;
-        Debug.Log("Game Session Ended.");
+
+        StopTimer();
 
         // Should probably either return to main menu or quit the application.
         // Replace with something akin to QuitToMain() (which could set isPlaying false) and Application.Quit();
     }
 
-    private void RestartTimer() {
+    private void RestartTimer()
+    {
+        StopTimer();
+
         this.timeRemaining = this.startingTime;
+        this.timerCoroutine = StartCoroutine(TimerCoroutine());
     }
 
-    private void DecrementTimer() {
-        if (this.timeRemaining > 0) {
-            this.timeRemaining -= Time.deltaTime;
-
-            if (this.timeRemaining <= 0) {
-                this.timeRemaining = 0;
-                GameOver();
-            }
+    private void StopTimer()
+    {
+        if (this.timerCoroutine != null)
+        {
+            StopCoroutine(this.timerCoroutine);
+            this.timerCoroutine = null;
         }
     }
 
-    private void OnPause(InputAction.CallbackContext context) {
-        //Check if player exists?
+    private IEnumerator TimerCoroutine()
+    {
+        while (this.timeRemaining > 0 && this.isPlaying && !this.isGameOver)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (!IsPlayerInControl())
+            {
+                continue;
+            }
+
+            this.timeRemaining -= 1f;
+
+            if (this.timeRemaining < 0)
+            {
+                this.timeRemaining = 0;
+            }
+
+            TimerTickEvent.Invoke(this.timeRemaining);
+
+            if (this.timeRemaining <= 0)
+            {
+                GameOver();
+                yield break;
+            }
+        }
+
+        this.timerCoroutine = null;
+    }
+
+    private void OnPause(InputAction.CallbackContext context)
+    {
         SetIsPaused(!this.isPaused);
     }
 }

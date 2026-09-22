@@ -71,6 +71,7 @@ public class Inventory : MonoBehaviour
         if (collectableData == null) { return false; }
         if (collectableData.GetID() < 0) { return false; }
         this.collectables.Add(collectableData);
+        SoundFXManager.Instance.PlaySoundFXClip(AudioUtils.SoundEffects.pickupSound.audioClip, transform, AudioUtils.SoundEffects.pickupSound.volume);
         return true;
     }
 

@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Music/Music Data")]
+[CreateAssetMenu(menuName = "Scriptable Objects/Audio/Music Data")]
 public class SO_MusicData : ScriptableObject
 {
     public AudioMixerGroup audioMixerGroup;

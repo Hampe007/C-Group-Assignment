@@ -29,13 +29,13 @@ public class LvlOverlayUI : MonoBehaviour {
     [SerializeField] private UIDocument UIDoc;
     [Tooltip("Which scene to load on quit button press")]
     [SerializeField] private string sceneLoadOnQuit;
-    [SerializeField] private SoundFXClip buttonPressSound;
     [SerializeField] private TestingData testingData;
     private VisualElement _timerElement, _scoreElement;
     private VisualElement _gamePausedMainContainer, _statsContainer;
     private VisualElement _gameOverOverlay, _gamePausedOverlay;
     private Label _timerLabel, _pointsLabel, _largePointsLabel;
     private Coroutine _timerFlashRoutineRef;
+    private SO_SoundEffectData _buttonPressSound;
 
     private void Awake()
     {
@@ -71,11 +71,14 @@ public class LvlOverlayUI : MonoBehaviour {
             StartCoroutine(ScoreTestRoutine(2f));
         }
 
+        _buttonPressSound = AudioUtils.SoundEffects.buttonPressSound;
+        UpdateTimerVisual(GameState.Instance.TimeRemaining);
         StartCoroutine(TimerEmphasizeRoutine());
         GameState.Instance.ScoreChangeEvent.AddListener(UpdatePointsVisual);
         GameState.Instance.GamePausedEvent.AddListener(OnGamePaused);
         GameState.Instance.GameUnPausedEvent.AddListener(OnGameResumed);
         GameState.Instance.GameOverEvent.AddListener(OnGameOver);
+        GameState.Instance.TimerTickEvent.AddListener(UpdateTimerVisual);
     }
 
     private void OnValidate()
@@ -95,10 +98,6 @@ public class LvlOverlayUI : MonoBehaviour {
         }
     }
 
-    private void Update()
-    {
-        UpdateTimerVisual(GameState.Instance.TimeRemaining);
-    }
 
 
     private void UpdateTimerVisual(float time)
@@ -129,7 +128,7 @@ public class LvlOverlayUI : MonoBehaviour {
 
     private void OnResumeButtonPress()
     {
-        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        SoundFXManager.Instance.PlaySoundFXClip(_buttonPressSound.audioClip, transform, _buttonPressSound.volume);
         GameState.Instance.SetIsPaused(false);
     }
 
@@ -140,7 +139,7 @@ public class LvlOverlayUI : MonoBehaviour {
             Time.timeScale = 1;
         }
         SceneManager.LoadScene(sceneLoadOnQuit);
-        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        SoundFXManager.Instance.PlaySoundFXClip(_buttonPressSound.audioClip, transform, _buttonPressSound.volume);
         GameState.Instance.Reset();
     }
 
@@ -152,7 +151,7 @@ public class LvlOverlayUI : MonoBehaviour {
             testingData.isGameOver = false;
             testingData.isGamePaused = false;
         }
-        SoundFXManager.Instance.PlaySoundFXClip(buttonPressSound.audioClip, transform, buttonPressSound.volume);
+        SoundFXManager.Instance.PlaySoundFXClip(_buttonPressSound.audioClip, transform, _buttonPressSound.volume);
         GameState.Instance.StartGame();
     }
 

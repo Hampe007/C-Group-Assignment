@@ -9,12 +9,12 @@ public class DropOffChestAnimator : MonoBehaviour
     [SerializeField] private AudioClip openSound;
 
     private Animator chestAnimator;
-    private AudioSource audioSource;
+    private SO_SoundEffectData soundEffect;
 
     private void Awake()
     {
         chestAnimator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        soundEffect = AudioUtils.SoundEffects.chestOpenSound;
     }
 
     public void PlayDepositAnimation()
@@ -23,7 +23,7 @@ public class DropOffChestAnimator : MonoBehaviour
 
         if (openSound != null)
         {
-            audioSource.PlayOneShot(openSound);
+            SoundFXManager.Instance.PlaySoundFXClip(soundEffect.audioClip, transform, soundEffect.volume);
         }
     }
 }
