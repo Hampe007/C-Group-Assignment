@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 4652809066467276259}
   - component: {fileID: 1162332453702358747}
   - component: {fileID: 386630902032038692}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plattform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4448700112728036872}
   - component: {fileID: 1821772236452861899}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DissapearingPlattform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   Plattform: {fileID: 4413118130065772407}
   Marker: {fileID: 1411782607987441072}
   Timer1: 4
-  Timer2: 0
+  Timer2: -1
   StartOff: 0
   MaterialOff: {fileID: 2100000, guid: b03354aec8ee86c468e218ad7f9908de, type: 2}
   Player: {fileID: 0}
