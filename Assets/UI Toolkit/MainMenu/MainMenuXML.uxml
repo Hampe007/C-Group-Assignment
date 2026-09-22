@@ -12,9 +12,47 @@
             <ui:VisualElement name="ButtonContainer">
                 <ui:Button text="START" name="StartButton"/>
                 <ui:Button text="Options" name="SoundOptionsButton"/>
+                <ui:Button text="Credits" name="CreditsMenuButton"/>
                 <ui:Button text="QUIT" name="QuitButton"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="SoundOptionsContainer" name="SoundOptionsContainer" style="visibility: hidden; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"/>
+    <ui:VisualElement name="CreditsMenuContainer" style="flex-grow: 1; position: absolute; top: 0; right: 0; bottom: 0; left: 0; font-size: 40px; visibility: hidden;">
+        <ui:VisualElement name="UpperContainer" style="flex-grow: 1; justify-content: flex-end; padding-bottom: 0%; width: 100%; height: 25%;">
+            <ui:Label text="Credits" name="Label" class="largeTextLabel"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="LowerContainer" style="flex-grow: 1; height: 75%; width: 100%;">
+            <ui:VisualElement name="TextContainer" style="flex-grow: 0; align-self: center; -unity-text-align: upper-center; font-size: 35px; justify-content: flex-start; padding-bottom: 2.5%;">
+                <ui:Label text="Developers" name="DevelopersLabel" style="color: rgb(255, 255, 255); font-size: 45px; padding-bottom: 14px;"/>
+                <ui:VisualElement name="DevelopersContainer" style="flex-grow: 0; padding-bottom: 40px; font-size: 40px;">
+                    <ui:Label text="Amanda" name="AmandaLabel"/>
+                    <ui:Label text="Cristian&#10;" name="CristianLabel"/>
+                    <ui:Label text="Ellie" name="EllieLabel"/>
+                    <ui:Label text="Hampus" name="HampusLabel"/>
+                    <ui:Label text="Lukas" name="LukasLabel"/>
+                    <ui:Label text="Noa" name="NoaLabel"/>
+                    <ui:Label text="Sebastian" name="SebastianLabel"/>
+                </ui:VisualElement>
+                <ui:Label text="Assets&#10;" name="AssetsLabel" style="color: rgb(255, 255, 255); font-size: 45px; padding-bottom: 14px;"/>
+                <ui:VisualElement name="AssetsContainer" style="flex-grow: 0; flex-direction: row; font-size: 30px;">
+                    <ui:VisualElement name="MusicContainer" style="flex-grow: 1; margin-right: 60px; -unity-text-align: upper-left;">
+                        <ui:Label text="Music from #Uppbeat (free for Creators!):&#10;" name="MusicLabel"/>
+                        <ui:VisualElement name="LabelContainer" style="flex-grow: 1;">
+                            <ui:Label text="https://uppbeat.io/t/evgeny-bardyuzha/cold-fire&#10;https://uppbeat.io/music/tracks/adam-tell/dyadic" style="-unity-text-align: upper-left;"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SoundFXContainer" style="flex-grow: 1; -unity-text-align: upper-left;">
+                        <ui:Label text="Sound Effects:" name="SoundFXLabel"/>
+                        <ui:VisualElement name="LabelContainer" style="flex-grow: 1; align-self: center; -unity-text-align: upper-left;">
+                            <ui:Label text="https://pixabay.com/&#10;https://www.zapsplat.com/"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="ButtonContainer">
+                <ui:Button text="Return" name="CreditsReturnButton"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
