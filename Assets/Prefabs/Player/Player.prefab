@@ -96,13 +96,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   acceleration: 3
-  walkMaxSpeed: 8.888889
-  runMaxSpeed: 22.22222
+  walkMaxSpeed: 12
+  runMaxSpeed: 23
+  slideMaxSpeed: 60
   gravityScale: 1.5
   jumpStrength: 23
   groundDrag: 5
   airDrag: 1
-  slopeDrag: 0
+  slideDrag: 0
   airMultiplier: 0.65
   maxSlopeAngle: 45
   slopeAcceleration: 4
