@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 public class SoundMenuUI : MonoBehaviour
 {
     [SerializeField] private UIDocument UIDoc;
-    [SerializeField] private SoundFXClip buttonPressSound;
+    [SerializeField] private SO_SoundEffectData buttonPressSound;
     private Slider _masterSlider, _musicSlider, _soundFXSlider;
     private Button _soundOptionsButton, _returnButton;
     private VisualElement _mainContainer, _soundOptionsContainer;

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b6e80070b5c95645afe2a671c3fb84a, type: 3}
-  m_Name: LvlMenuMusic
+  m_Name: LvlMusic
   m_EditorClassIdentifier: Assembly-CSharp::SO_MusicData
   audioMixerGroup: {fileID: -1308329144379018163, guid: 5b44ed791d0c9a04fbb5d5a12b64c0bc, type: 2}
   audioClip: {fileID: 8300000, guid: 7349bf69ccb99fc4a96be368413c976f, type: 3}

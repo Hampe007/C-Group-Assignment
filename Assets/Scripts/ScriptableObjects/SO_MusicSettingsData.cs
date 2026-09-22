@@ -16,7 +16,7 @@ public struct BackgroundSongSettings
 
 }
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Music/Music Settings Data")]
+[CreateAssetMenu(menuName = "Scriptable Objects/Audio/Music Settings Data")]
 public class SO_MusicSettingsData : ScriptableObject
 {
     public List<BackgroundSongSettings> BackgroundSongs;
