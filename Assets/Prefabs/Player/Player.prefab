@@ -98,7 +98,7 @@ MonoBehaviour:
   acceleration: 6
   walkMaxSpeed: 12
   runMaxSpeed: 23
-  slideMaxSpeed: 80
+  slideMaxSpeed: 65
   gravityScale: 1.5
   jumpStrength: 23
   groundDrag: 5
