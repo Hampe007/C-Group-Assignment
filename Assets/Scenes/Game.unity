@@ -2260,6 +2260,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 57787c7e5909313439d44f2477204815, type: 3}
   m_PrefabInstance: {fileID: 1147196610}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &516890156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8157100447496791421, guid: 8f20863f569f70045b828bc1b61ee7cb, type: 3}
+  m_PrefabInstance: {fileID: 546025327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531794859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4771,6 +4776,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4448700112728036872, guid: 9118a80174389084897fdc8920da14fd, type: 3}
   m_PrefabInstance: {fileID: 1627412386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1179627176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 264674831305434630, guid: 2b455975c7db3fc429921ae0642210df, type: 3}
+  m_PrefabInstance: {fileID: 1292471220}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1185155234
 PrefabInstance:
@@ -8225,6 +8235,7 @@ GameObject:
   - component: {fileID: 4585942448111139260}
   - component: {fileID: 2261749560707773354}
   - component: {fileID: 4189696995344489360}
+  - component: {fileID: 6607405089619355623}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -8419,6 +8430,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6607405089619355623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354788015338984574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366bb7428f33013489dc8c2c882fe84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KillPlayer
+  Player: {fileID: 1179627176}
+  RespawnPoint: {fileID: 516890156}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
