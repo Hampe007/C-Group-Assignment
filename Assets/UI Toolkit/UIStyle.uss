@@ -32,13 +32,13 @@ Button {
     transition-duration: 0.125s;
     align-self: center;
     aspect-ratio: 6;
-    width: 550px;
+    width: 500px;
     padding-top: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
     height: auto;
-    font-size: 45px;
+    font-size: 35px;
     margin-bottom: 10px;
 }
 

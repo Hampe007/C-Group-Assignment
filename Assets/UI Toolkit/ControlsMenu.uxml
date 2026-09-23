@@ -1,0 +1,17 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UIStyle.uss?fileID=7433441132597879392&amp;guid=ade595b3343210b4186d64ecb9c8b9b6&amp;type=3#UIStyle"/>
+    <ui:VisualElement name="ControlsMenu" style="flex-grow: 1; align-items: center; position: absolute; flex-shrink: 0; top: 0; right: 0; bottom: 0; left: 0;">
+        <ui:VisualElement name="UpperContainer" style="flex-grow: 1; justify-content: flex-end; padding-bottom: 3%; width: 100%; height: 45%;">
+            <ui:Label text="Controls" class="largeTextLabel"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="LowerContainer" style="flex-grow: 1; height: 55%; width: 100%;">
+            <ui:VisualElement name="InstructionsContainer" style="margin-bottom: 40px; margin-top: 0; align-self: center; font-size: 30px;">
+                <ui:Label text="Hold down &lt;b&gt;SHIFT&lt;/b&gt; to run" name="Label" style="-unity-text-align: upper-center; padding-bottom: 20px;"/>
+                <ui:Label text="Slide by holding &lt;b&gt;C&lt;/b&gt; while moving if you’re on a slope" name="Label" style="-unity-text-align: upper-center; padding-bottom: 20px;"/>
+                <ui:Label text="Wall run by jumping onto a wall and holding the direction" name="Label" style="-unity-text-align: upper-center; padding-bottom: 20px;"/>
+                <ui:Label text="Jump by pressing &lt;b&gt;SPACE&lt;/b&gt;" name="Label" style="-unity-text-align: upper-center; padding-bottom: 20px;"/>
+            </ui:VisualElement>
+            <ui:Button text="RETURN" name="ControlsReturnButton"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

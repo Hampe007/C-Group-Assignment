@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundMixerManager
   audioMixer: {fileID: 24100000, guid: 5b44ed791d0c9a04fbb5d5a12b64c0bc, type: 2}
+  masterVolumeMultiplier: 100
+  soundFXVolumeMultiplier: 200
+  musicVolumeMultiplier: 100
