@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1245614674621850127}
   - component: {fileID: 843028618058468642}
+  - component: {fileID: 1679264029695858542}
   - component: {fileID: 6854159622076561838}
   - component: {fileID: 6027750642664810778}
   - component: {fileID: 1041675067166115435}
@@ -52,6 +53,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   collectables: []
+--- !u!114 &1679264029695858542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264674831305434630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0107be6280d8ef4fb7560b59eab0fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  move: {fileID: -1680190386980627800, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  jump: {fileID: -2099379676528639254, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  run: {fileID: -7471211009204490832, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  slide: {fileID: 7040659881675835329, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  look: {fileID: -5630151704836100654, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  interact: {fileID: 1781555164194001046, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
 --- !u!114 &6854159622076561838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b298216afd74ff479fadbdda5398b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interact: {fileID: 1781555164194001046, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
 --- !u!114 &6027750642664810778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,22 +95,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06970805e0c3a17439ff75621695ef76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  acceleration: 3
-  walkMaxSpeed: 8.888889
-  runMaxSpeed: 22.22222
+  acceleration: 6
+  walkMaxSpeed: 12
+  runMaxSpeed: 23
+  slideMaxSpeed: 65
   gravityScale: 1.5
   jumpStrength: 23
   groundDrag: 5
   airDrag: 1
-  slopeDrag: 0
+  slideDrag: 0.1
   airMultiplier: 0.65
   maxSlopeAngle: 45
   slopeAcceleration: 4
   maxAirJumps: 1
-  move: {fileID: -1680190386980627800, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  jump: {fileID: -2099379676528639254, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  run: {fileID: -7471211009204490832, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  slide: {fileID: 7040659881675835329, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -431,9 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b5978cce9584e48be866dfc452b591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  look: {fileID: -5630151704836100654, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  lookDirection: {x: 0, y: 0, z: 0}
-  localAngles: {x: 0, y: 0, z: 0}
-  playerRB: {fileID: 4580038368980269861}
   verticalSensitivity: 0.2
   horizontalSensitivity: 0.35
+  lookDirection: {x: 0, y: 0, z: 0}
+  localAngles: {x: 0, y: 0, z: 0}

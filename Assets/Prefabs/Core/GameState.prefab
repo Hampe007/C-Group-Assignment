@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4480055486332390450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.33646, y: 0.05, z: 0.79346}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameState
   pause: {fileID: -8747849590089934428, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
+  startScene: 2
   playerScore: 0
-  startingTime: 60
+  startingTime: 20

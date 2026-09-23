@@ -1,49 +1,36 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
-public class CameraLook : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] InputActionReference look;
+public class CameraLook : MonoBehaviour {
+    Camera cameraComponent;
+    private Rigidbody playerRB;
+    private Vector2 lookInput;
+
+    [SerializeField] private float verticalSensitivity = 0.2f;
+    [SerializeField] private float horizontalSensitivity = 0.35f;
+
     public Vector3 lookDirection;
     public Vector3 localAngles;
     float lookX;
     float lookY;
 
-    [SerializeField] Rigidbody playerRB;
+    void Awake() {
+        playerRB = GetComponentInParent<Rigidbody>();
+    }
 
-    [SerializeField] float verticalSensitivity = 0.2f;
-    [SerializeField] float horizontalSensitivity = 0.35f;
-    
-    Camera cameraComponent;
-    
-    void Start()
-    {
+    void Start() {
         cameraComponent = GetComponent<Camera>();
         //Cursor.lockState = CursorLockMode.Locked;
-        if (look != null) look.action.Enable();
     }
 
-    /*private void OnEnable() {
-        if (Look != null) Look.action.Enable();
-    }*/
+    public void SetLookInput(Vector2 input) { lookInput = input; }
 
-    private void OnDisable()
-    {
-        if (look != null) look.action.Disable();
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        if (cameraComponent == null || playerRB == null) { return; }
+
         // Do not rotate camera if the game is paused or over
         if (GameState.Instance != null && playerRB != null && !GameState.Instance.IsPlayerInControl())
             return;
-        
-        // Read the 2D vector input from the new Input System
-        Vector2 lookInput = look.action.ReadValue<Vector2>();
 
         // Vertical Look (Pitch): Tilt the camera up and down
         lookX -= lookInput.y * verticalSensitivity;

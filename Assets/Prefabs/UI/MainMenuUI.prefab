@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8698412239012780460}
   - component: {fileID: 3240599658072842904}
   - component: {fileID: 1474057238089464050}
+  - component: {fileID: 2259208033797783677}
+  - component: {fileID: 3464249839971568912}
   m_Layer: 5
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -69,4 +71,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
   UIDoc: {fileID: 3240599658072842904}
-  sceneToLoad: 
+--- !u!114 &2259208033797783677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2268232382051802665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8935ba8b1e0b042afa9a0ed254fcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundMenuUI
+  UIDoc: {fileID: 3240599658072842904}
+  buttonPressSound: {fileID: 11400000, guid: cb49e26f6951e2a4993f84b51c345dc1, type: 2}
+--- !u!114 &3464249839971568912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2268232382051802665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d77d8c590bbe56468e3c2e47343529f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreditsMenuUI
+  UIDoc: {fileID: 3240599658072842904}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc74289d5cc600459e44c28a0bc1d50, type: 3}
+  m_Name: MusicSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SO_MusicSettingsData
+  BackgroundSongs:
+  - name: Main Menu Music
+    sceneIndex: 1
+    data: {fileID: 11400000, guid: fa7876d919c9fd54d8f9c1d66f14257c, type: 2}
+    timeAfterSceneLoadPlay: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0.5
+  - name: Lvl Music
+    sceneIndex: 2
+    data: {fileID: 11400000, guid: 051dedd68a8200042bf642a24f0c5506, type: 2}
+    timeAfterSceneLoadPlay: 1
+    fadeInDuration: 1.5
+    fadeOutDuration: 0.5

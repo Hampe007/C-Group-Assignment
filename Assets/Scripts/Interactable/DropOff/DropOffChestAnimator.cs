@@ -1,29 +1,30 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
 public class DropOffChestAnimator : MonoBehaviour
 {
     private static readonly int DepositTrigger = Animator.StringToHash("Deposit");
 
-    [SerializeField] private AudioClip openSound;
-
     private Animator chestAnimator;
-    private AudioSource audioSource;
 
     private void Awake()
     {
         chestAnimator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     public void PlayDepositAnimation()
     {
         chestAnimator.SetTrigger(DepositTrigger);
 
-        if (openSound != null)
+        SoundFXManager soundFXManager = SoundFXManager.Instance;
+        SO_SoundEffectData soundEffect = soundFXManager?.SoundEffects?.chestOpenSound;
+
+        if (soundFXManager == null || soundEffect == null || soundEffect.audioClip == null)
         {
-            audioSource.PlayOneShot(openSound);
+            Debug.LogWarning("The chest deposit sound is not configured.", this);
+            return;
         }
+
+        soundFXManager.PlaySoundFXClip(soundEffect.audioClip, transform, soundEffect.volume);
     }
 }
