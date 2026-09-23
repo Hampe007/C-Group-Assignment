@@ -95,14 +95,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06970805e0c3a17439ff75621695ef76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  acceleration: 3
-  walkMaxSpeed: 8.888889
-  runMaxSpeed: 22.22222
+  acceleration: 6
+  walkMaxSpeed: 12
+  runMaxSpeed: 23
+  slideMaxSpeed: 65
   gravityScale: 1.5
   jumpStrength: 23
   groundDrag: 5
   airDrag: 1
-  slopeDrag: 0
+  slideDrag: 0.1
   airMultiplier: 0.65
   maxSlopeAngle: 45
   slopeAcceleration: 4
