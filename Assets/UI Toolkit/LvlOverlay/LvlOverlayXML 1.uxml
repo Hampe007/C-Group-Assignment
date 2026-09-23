@@ -20,7 +20,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="TimerElement" class="timerEmphasized" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Textures/painted_circle.png?fileID=2800000&amp;guid=4fb4e6af81766bb49be2c57140645bd7&amp;type=3#painted_circle&quot;); align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/DigitalNumbers-Regular.ttf?fileID=12800000&amp;guid=2ce092f12c6e24f43a4b04ca071e648c&amp;type=3#DigitalNumbers-Regular&quot;); background-position-x: right 15px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); aspect-ratio: 1; top: auto; font-size: 40px; left: 16px; position: absolute; bottom: 16px;">
+        <ui:VisualElement name="TimerElement" class="timerRegular" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Textures/painted_circle.png?fileID=2800000&amp;guid=4fb4e6af81766bb49be2c57140645bd7&amp;type=3#painted_circle&quot;); align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/DigitalNumbers-Regular.ttf?fileID=12800000&amp;guid=2ce092f12c6e24f43a4b04ca071e648c&amp;type=3#DigitalNumbers-Regular&quot;); background-position-x: right 15px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); aspect-ratio: 1; top: auto; font-size: 35px; left: 16px; position: absolute; bottom: 16px;">
             <ui:Label text="00:00" name="TimerLabel"/>
         </ui:VisualElement>
     </ui:VisualElement>

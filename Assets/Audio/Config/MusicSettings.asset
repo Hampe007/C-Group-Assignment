@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_MusicSettingsData
   BackgroundSongs:
   - name: Main Menu Music
-    sceneIndex: 1
+    sceneIndex: 0
     data: {fileID: 11400000, guid: fa7876d919c9fd54d8f9c1d66f14257c, type: 2}
     timeAfterSceneLoadPlay: 0
     fadeInDuration: 0
     fadeOutDuration: 0.5
   - name: Lvl Music
-    sceneIndex: 2
+    sceneIndex: 1
     data: {fileID: 11400000, guid: 051dedd68a8200042bf642a24f0c5506, type: 2}
     timeAfterSceneLoadPlay: 1
     fadeInDuration: 1.5

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameState : Singleton<GameState>
 {
     [SerializeField] InputActionReference pause;
-    [SerializeField] private int startScene = 1;
+    [SerializeField] private int gameScene = 1;
 
     [Header("Player Settings")]
     [SerializeField] private uint playerScore = 0;
@@ -41,7 +41,7 @@ public class GameState : Singleton<GameState>
     /// </summary>
     public void StartGame()
     {
-        SceneManager.LoadScene(startScene);
+        SceneManager.LoadScene(gameScene);
         Reset();
     }
 
