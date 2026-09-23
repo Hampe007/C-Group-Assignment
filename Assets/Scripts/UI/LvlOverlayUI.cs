@@ -28,7 +28,7 @@ struct TestingData
 public class LvlOverlayUI : MonoBehaviour {
     [SerializeField] private UIDocument UIDoc;
     [Tooltip("Which scene to load on quit button press")]
-    [SerializeField] private string sceneLoadOnQuit;
+    [SerializeField] private int sceneLoadOnQuit;
     [SerializeField] private TestingData testingData;
     private VisualElement _timerElement, _scoreElement;
     private VisualElement _gamePausedMainContainer, _statsContainer;

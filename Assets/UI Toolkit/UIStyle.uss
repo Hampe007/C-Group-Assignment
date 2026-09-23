@@ -120,7 +120,7 @@ Slider:focus #unity-tracker {
 }
 
 .timerEmphasized {
-    width: 350px;
+    width: 17%;
     height: auto;
     color: rgb(255, 255, 255);
     transition-timing-function: ease-out;
@@ -131,7 +131,7 @@ Slider:focus #unity-tracker {
     transition-duration: 0.35s;
     transition-timing-function: ease-in-out-sine;
     color: rgb(255, 255, 255);
-    width: 300px;
+    width: 12.5%;
 }
 
 .timerFlash {
@@ -156,7 +156,7 @@ Slider:focus #unity-tracker {
 }
 
 .scoreRegular .pointsText {
-    font-size: 43px;
+    font-size: 32.5px;
     color: rgba(255, 255, 255, 0.698);
     transition-timing-function: ease-in;
     transition-duration: 0.125s;
@@ -164,12 +164,12 @@ Slider:focus #unity-tracker {
 
 .scoreEmphasized .pointsText {
     color: rgb(255, 255, 255);
-    font-size: 50px;
+    font-size: 38px;
 }
 
 .scoreText {
     color: rgba(255, 255, 255, 0.835);
-    font-size: 35px;
+    font-size: 27.5px;
     transition-timing-function: ease-in;
     transition-duration: 0.125s;
 }
