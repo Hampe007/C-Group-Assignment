@@ -26,7 +26,7 @@ public class DissapearingPlatfformScript : MonoBehaviour
         {
             //Plattform.active = false;  || OLD CODE. IN CASE OF EMERGENCY BREAK // AND DELETE THE 3 LINES BELOW.
             IsOff = true;
-            Physics.IgnoreCollision(Plattform.GetComponent<Collider>(), Player.GetComponent<Collider>(), IsOff);
+           Plattform.GetComponent<Collider>().enabled = !IsOff;
             Plattform.GetComponent<MeshRenderer>().material = MaterialOff;
         }
         
@@ -50,7 +50,7 @@ public class DissapearingPlatfformScript : MonoBehaviour
             //Sets a bool which decides if collision should be ignored or not.
             IsOff = IsOff == true ? false : true;
             //Sets of collision should be ignored between plattform and player depending on if the plattform should be off or not.
-            Physics.IgnoreCollision(Plattform.GetComponent<Collider>(), Player.GetComponent<Collider>(), IsOff);
+            Plattform.GetComponent<Collider>().enabled = !IsOff;
             //Changes the material to the opposite material.
             Plattform.GetComponent<MeshRenderer>().material = Plattform.GetComponent<MeshRenderer>().material == MaterialOn ? MaterialOff : MaterialOn;
 
@@ -61,7 +61,7 @@ public class DissapearingPlatfformScript : MonoBehaviour
             //Plattform.active = Plattform.active == true ? false : true;
             
             IsOff = IsOff == true ? false : true;
-            Physics.IgnoreCollision(Plattform.GetComponent<Collider>(), Player.GetComponent<Collider>(), IsOff);
+            Plattform.GetComponent<Collider>().enabled = !IsOff;
             Plattform.GetComponent<MeshRenderer>().material = Plattform.GetComponent<MeshRenderer>().material == MaterialOn ? MaterialOff : MaterialOn;
         }
         
