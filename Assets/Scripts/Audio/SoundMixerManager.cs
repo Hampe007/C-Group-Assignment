@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -5,66 +6,72 @@ public class SoundMixerManager : Singleton<SoundMixerManager>
 {
     [SerializeField] private AudioMixer audioMixer;
 
-    /// <summary>
-    /// Returns the volume value from the main mixer master channel mapped to a value between 0f and 100f.
-    /// </summary>
+    [Header("Channel Multipliers")]
+    [Range(50f, 200f)]
+    [SerializeField] private float masterVolumeMultiplier = 100f;
+    [Range(50f, 200f)]
+    [SerializeField] private float soundFXVolumeMultiplier = 100f;
+    [Range(50f, 200f)]
+    [SerializeField] private float musicVolumeMultiplier = 100f;
+
     public float MasterVolume
     {
         get
         {
             audioMixer.GetFloat("masterVolume", out float volume);
-            return AudioUtils.DecibelToPercent(volume);
+            return GetOriginalPercent(volume, masterVolumeMultiplier);
         }
     }
 
-    /// <summary>
-    /// Returns the volume value from the main mixer soundFX channel mapped to a value between 0f and 100f.
-    /// </summary>
     public float SoundFXVolume
     {
         get
         {
             audioMixer.GetFloat("soundFXVolume", out float volume);
-            return AudioUtils.DecibelToPercent(volume);
+            return GetOriginalPercent(volume, soundFXVolumeMultiplier);
         }
     }
 
-    /// <summary>
-    /// Returns the volume value from the main mixer music channel mapped to a value between 0f and 100f.
-    /// </summary>
     public float MusicVolume
     {
         get
         {
             audioMixer.GetFloat("musicVolume", out float volume);
-            return AudioUtils.DecibelToPercent(volume);
+            return GetOriginalPercent(volume, musicVolumeMultiplier);
         }
     }
 
-    /// <summary>
-    /// Set the master volume. Expects a value between 0f and 100f.
-    /// </summary>
-    /// <param name="percent"></param>
     public void SetMasterVolume(float percent)
     {
-        audioMixer.SetFloat("masterVolume", AudioUtils.PercentToDecibel(percent));
+        SetMixerVolume("masterVolume", percent, masterVolumeMultiplier);
     }
 
-    /// <summary>
-    /// Set the soundFX volume. Expects a value between 0f and 100f.
-    /// </summary>
-    /// <param name="percent"></param>
     public void SetSoundFXVolume(float percent)
     {
-        audioMixer.SetFloat("soundFXVolume", AudioUtils.PercentToDecibel(percent));
+        SetMixerVolume("soundFXVolume", percent, soundFXVolumeMultiplier);
     }
 
-    /// <summary>
-    /// Set the music volume. Expects a value between 0f and 100f.
-    /// </summary>
-    /// <param name="percent"></param>
     public void SetMusicVolume(float percent)
     {
-        audioMixer.SetFloat("musicVolume", AudioUtils.PercentToDecibel(percent));
+        SetMixerVolume("musicVolume", percent, musicVolumeMultiplier);
+    }
+
+    private void SetMixerVolume(string parameter, float percent, float multiplier)
+    {
+        float db = AudioUtils.PercentToDecibel(percent);
+        db += MultiplierToDecibel(multiplier);
+        audioMixer.SetFloat(parameter, db);
+    }
+
+    private float GetOriginalPercent(float mixerDb, float multiplier)
+    {
+        float multiplierDb = MultiplierToDecibel(multiplier);
+        float originalDb = mixerDb - multiplierDb;
+        return AudioUtils.DecibelToPercent(originalDb);
+    }
+
+    private float MultiplierToDecibel(float multiplier)
+    {
+        return Mathf.Log10(multiplier / 100f) * 20f;
     }
 }

@@ -6,17 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameState : Singleton<GameState>
 {
+    private const int GAME_SCENE = 1;
     [SerializeField] InputActionReference pause;
-    [SerializeField] private int gameScene = 1;
-
-    [Header("Player Settings")]
-    [SerializeField] private uint playerScore = 0;
-
     [Header("Timer Settings")]
     [SerializeField] private float startingTime = 60f;
     private float timeRemaining;
     private Coroutine timerCoroutine;
-
+    private uint playerScore = 0;
     private bool isPlaying = false;
     private bool isGameOver = false;
     private bool isPaused = false;
@@ -41,7 +37,7 @@ public class GameState : Singleton<GameState>
     /// </summary>
     public void StartGame()
     {
-        SceneManager.LoadScene(gameScene);
+        SceneManager.LoadScene(GAME_SCENE);
         Reset();
     }
 

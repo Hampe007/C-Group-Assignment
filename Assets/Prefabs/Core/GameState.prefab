@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameState
   pause: {fileID: -8747849590089934428, guid: 98fd8a34fe51147419013c0677aa5139, type: 3}
-  startScene: 2
+  gameScene: 1
   playerScore: 0
-  startingTime: 20
+  startingTime: 120
