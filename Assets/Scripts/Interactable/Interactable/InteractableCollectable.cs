@@ -1,11 +1,13 @@
 using UnityEngine;
 
+/// <summary>Represents a world collectable that can be hidden in the inventory and restored later.</summary>
 public class InteractableCollectable : Interactable
 {
 
     [Header("Interaction")]
     [SerializeField] private GameObject interactionPrompt;
 
+    // Both local and world transforms are retained because a collected object may have no parent.
     private Transform pickupParent;
     private Vector3 pickupLocalPosition;
     private Quaternion pickupLocalRotation;
@@ -68,12 +70,7 @@ public class InteractableCollectable : Interactable
     }
 
     public override string ToString() {
-        return ("[InteractableCollectable, ID=" + this.data.GetID() + 
-            ", InteractionType=" + this.data.GetInteractionType() +
-            ", InteractionState=" + this.state + 
-            ", CollectableName=" + ((SO_InteractableCollectableData)this.data).GetCollectableName() +
-            ", CollectableValue=" + ((SO_InteractableCollectableData)this.data).GetCollectableValue() + 
-            "]");
+        return ("[InteractableCollectable, ID=" + this.data.GetID() + ", InteractionType=" + this.data.GetInteractionType() + ", InteractionState=" + this.state + ", CollectableName=" + ((SO_InteractableCollectableData)this.data).GetCollectableName() + ", CollectableValue=" + ((SO_InteractableCollectableData)this.data).GetCollectableValue() + "]");
     }
     
     private bool IsPlayer(Collider other) => other.CompareTag("Player") || other.transform.root.CompareTag("Player");

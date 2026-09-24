@@ -27,7 +27,7 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable is InteractableCollectable collectable) {
             Collider collectableCollider = collectable.GetComponent<Collider>();
 
-            // Prevent duplicate pickup callbacks.
+            // Disabling the collider blocks another input event from collecting the same object.
             if (collectableCollider == null || !collectableCollider.enabled) {
                 return;
             }

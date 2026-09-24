@@ -4,6 +4,7 @@ using UnityEngine;
 public class SO_InteractableCollectableData : SO_InteractableData {
     [SerializeField] protected string collectableName;
     [SerializeField] protected uint collectableValue = 0;
+    // The spawner instantiates this prefab and assigns this data asset to the new collectable instance.
     [SerializeField] private GameObject collectablePrefab;
 
     protected override void OnEnable() {

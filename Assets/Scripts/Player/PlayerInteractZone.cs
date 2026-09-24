@@ -126,6 +126,7 @@ public class PlayerInteractZone : MonoBehaviour {
                 this.ShowInteractPrompt(interactable);
             */
 
+            // Several colliders can enter the zone for one object; track each interactable only once.
             if (!this.interactablesInRange.Contains(other.gameObject)) {
                 this.interactablesInRange.Add(other.gameObject);
             }
@@ -261,6 +262,7 @@ public class PlayerInteractZone : MonoBehaviour {
     }
 
     private void RemoveUnavailableInteractables() {
+        // Picked-up collectables are deactivated before their trigger-exit callback can run.
         this.interactablesInRange.RemoveAll(interactable =>
             interactable == null || !interactable.activeInHierarchy);
     }

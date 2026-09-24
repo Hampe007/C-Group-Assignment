@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Spawns each configured item type across the configured spawn points in a random order.</summary>
 public class CollectableSpawner : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints = new();
@@ -18,6 +19,7 @@ public class CollectableSpawner : MonoBehaviour
 
         Shuffle(validSpawnPoints);
 
+        // Each complete batch contains every item type once; the final partial batch remains random.
         for (int i = 0; i < validSpawnPoints.Count; i += validItemTypes.Count)
         {
             Shuffle(validItemTypes);
@@ -98,6 +100,7 @@ public class CollectableSpawner : MonoBehaviour
 
     private static void Shuffle<T>(IList<T> items)
     {
+        // Fisher-Yates shuffle gives every ordering the same probability.
         for (int i = items.Count - 1; i > 0; i--)
         {
             int swapIndex = Random.Range(0, i + 1);

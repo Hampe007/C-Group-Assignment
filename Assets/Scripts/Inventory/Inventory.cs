@@ -67,12 +67,23 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Adds the world instance to the inventory and hides it so it can be restored if the player dies.
+    /// </summary>
     public bool AddCollectable(InteractableCollectable collectable) {
-        SO_InteractableCollectableData collectableData = collectable == null ? null :
-            collectable.GetInteractableData() as SO_InteractableCollectableData;
-        if (collectableData == null || !collectable.gameObject.activeInHierarchy) { return false; }
-        if (collectableData.GetID() < 0) { return false; }
-        if (this.collectables.Contains(collectable)) { return false; }
+        SO_InteractableCollectableData collectableData = collectable == null ? null : collectable.GetInteractableData() as SO_InteractableCollectableData;
+        if (collectableData == null || !collectable.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+        if (collectableData.GetID() < 0)
+        {
+            return false;
+        }
+        if (this.collectables.Contains(collectable))
+        {
+            return false;
+        }
         this.collectables.Add(collectable);
         collectable.PickUp();
         SoundFXManager.Instance.PlaySoundFXClip(AudioUtils.SoundEffects.pickupSound.audioClip, transform, AudioUtils.SoundEffects.pickupSound.volume);
@@ -117,7 +128,8 @@ public class Inventory : MonoBehaviour
     public bool RemoveCollectableByID(int collectableID) {
         if (this.collectables.Count == 0) { return false; }
         if (collectableID < 0) { return false; }
-        foreach (SO_InteractableCollectableData data in collectables) {
+        foreach (SO_InteractableCollectableData data in collectables)
+        {
             if (data.GetID() == collectableID) {
                 this.collectables.Remove(data);
                 return true;
@@ -126,7 +138,8 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public SO_InteractableCollectableData RemoveAndGetFirstCollectable() {
+    public SO_InteractableCollectableData RemoveAndGetFirstCollectable()
+    {
         if (this.collectables.Count > 0) {
             SO_InteractableCollectableData removedData = this.collectables[0];
             this.collectables.RemoveAt(0);
@@ -135,7 +148,8 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public SO_InteractableCollectableData RemoveAndGetLastCollectable() {
+    public SO_InteractableCollectableData RemoveAndGetLastCollectable()
+    {
         if (this.collectables.Count > 0) {
             SO_InteractableCollectableData removedData = this.collectables[^1];
             this.collectables.RemoveAt(this.collectables.Count - 1);
@@ -144,7 +158,8 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public SO_InteractableCollectableData RemoveAndGetCollectableByIndex(int index) {
+    public SO_InteractableCollectableData RemoveAndGetCollectableByIndex(int index)
+    {
         if (this.collectables.Count == 0) { return null; }
         if (index < 0 || index >= collectables.Count) { return null; }
         SO_InteractableCollectableData removedData = this.collectables[index];
