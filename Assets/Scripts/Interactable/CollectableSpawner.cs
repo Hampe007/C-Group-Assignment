@@ -26,7 +26,6 @@ public class CollectableSpawner : MonoBehaviour
             for (int j = 0; j < batchSize; j++)
             {
                 Spawn(validSpawnPoints[i + j], validItemTypes[j]);
-                Debug.Log(validSpawnPoints[i + j], validItemTypes[j]);
             }
         }
     }
@@ -50,7 +49,6 @@ public class CollectableSpawner : MonoBehaviour
             else
             {
                 valid.Add(spawnPoint);
-                Debug.Log(spawnPoint);
             }
         }
 
@@ -96,7 +94,6 @@ public class CollectableSpawner : MonoBehaviour
         spawnedObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         spawnedObject.name = itemType.GetCollectableName();
         spawnedObject.GetComponent<InteractableCollectable>().Initialize(itemType);
-        Debug.Log(itemType);
     }
 
     private static void Shuffle<T>(IList<T> items)
@@ -105,7 +102,6 @@ public class CollectableSpawner : MonoBehaviour
         {
             int swapIndex = Random.Range(0, i + 1);
             (items[i], items[swapIndex]) = (items[swapIndex], items[i]);
-            Debug.Log("Shuffled item at index " + i + ": " + items[swapIndex]);
         }
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd34b5f0a944bb1448d16733632984b4, type: 3}
-  m_Name: OrangeData
+  m_Name: ItemData4
   m_EditorClassIdentifier: Assembly-CSharp::SO_InteractableCollectableData
-  interactableID: 2
-  collectableName: Orange
-  collectableValue: 67
-  collectablePrefab: {fileID: 7580625740526202600, guid: 9a2b7c837e32f994c8c7ac58caea44d6, type: 3}
+  interactableID: 4
+  collectableName: Item4
+  collectableValue: 20
+  collectablePrefab: {fileID: 7580625740526202600, guid: 2f44985fd0a8ebe4dbb8ff0e3d292f96, type: 3}
