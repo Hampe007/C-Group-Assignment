@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
 
     public static Inventory Instance { get; private set; }
 
-    [SerializeField] private List<SO_InteractableCollectableData> collectables = new();
+    [SerializeField] private CarriedCollectableList collectables = new();
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -67,10 +67,14 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public bool AddCollectable(SO_InteractableCollectableData collectableData) {
-        if (collectableData == null) { return false; }
+    public bool AddCollectable(InteractableCollectable collectable) {
+        SO_InteractableCollectableData collectableData = collectable == null ? null :
+            collectable.GetInteractableData() as SO_InteractableCollectableData;
+        if (collectableData == null || !collectable.gameObject.activeInHierarchy) { return false; }
         if (collectableData.GetID() < 0) { return false; }
-        this.collectables.Add(collectableData);
+        if (this.collectables.Contains(collectable)) { return false; }
+        this.collectables.Add(collectable);
+        collectable.PickUp();
         SoundFXManager.Instance.PlaySoundFXClip(AudioUtils.SoundEffects.pickupSound.audioClip, transform, AudioUtils.SoundEffects.pickupSound.volume);
         return true;
     }
@@ -173,4 +177,7 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+
+    /// <summary>Restores every carried instance to its pickup position and empties the inventory.</summary>
+    public void RestoreAllCollectables() { this.collectables.RestoreAll(); }
 }

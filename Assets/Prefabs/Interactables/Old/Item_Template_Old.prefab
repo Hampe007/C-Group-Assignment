@@ -342,7 +342,7 @@ PrefabInstance:
     - target: {fileID: 9065061187104377636, guid: cc6fe2c4e2088ce4290d45f155f09ba3, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 3f985b9d908bc214287d28410d8cf21f, type: 2}
     - target: {fileID: 9065061187104377636, guid: cc6fe2c4e2088ce4290d45f155f09ba3, type: 3}
       propertyPath: interactionPrompt
       value: 

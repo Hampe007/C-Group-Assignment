@@ -9,6 +9,9 @@ public class KillPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Inventory.Instance?.RestoreAllCollectables();
+            other.GetComponentInChildren<PlayerInteractZone>(true)?.ClearInteractables();
+            if (other.attachedRigidbody != null) { other.attachedRigidbody.linearVelocity = Vector3.zero; }
             other.transform.position = RespawnPoint.position;
         }
     }

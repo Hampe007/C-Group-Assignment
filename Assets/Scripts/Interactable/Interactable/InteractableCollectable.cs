@@ -6,6 +6,13 @@ public class InteractableCollectable : Interactable
     [Header("Interaction")]
     [SerializeField] private GameObject interactionPrompt;
 
+    private Transform pickupParent;
+    private Vector3 pickupLocalPosition;
+    private Quaternion pickupLocalRotation;
+    private Vector3 pickupWorldPosition;
+    private Quaternion pickupWorldRotation;
+    private bool hasPickupPosition;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -19,6 +26,41 @@ public class InteractableCollectable : Interactable
     }
 
     public override SO_InteractableData Interact() { return this.data; }
+
+    /// <summary>Assigns the collectable data used by a spawned instance.</summary>
+    public void Initialize(SO_InteractableCollectableData collectableData) { this.data = collectableData; }
+
+    /// <summary>Records this instance's placement and hides it while carried.</summary>
+    public void PickUp()
+    {
+        pickupParent = transform.parent;
+        pickupLocalPosition = transform.localPosition;
+        pickupLocalRotation = transform.localRotation;
+        pickupWorldPosition = transform.position;
+        pickupWorldRotation = transform.rotation;
+        hasPickupPosition = true;
+        transform.SetParent(null, true);
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>Returns this instance to the placement recorded when it was picked up.</summary>
+    public void Restore()
+    {
+        if (!hasPickupPosition) { return; }
+
+        if (pickupParent != null)
+        {
+            transform.SetParent(pickupParent, false);
+            transform.SetLocalPositionAndRotation(pickupLocalPosition, pickupLocalRotation);
+        }
+        else
+        {
+            transform.SetParent(null);
+            transform.SetPositionAndRotation(pickupWorldPosition, pickupWorldRotation);
+        }
+
+        gameObject.SetActive(true);
+    }
 
     public override bool ChangeState(InteractionState interactionState) {
         this.state = interactionState;

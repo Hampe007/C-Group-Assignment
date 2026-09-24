@@ -10,9 +10,6 @@ public class PlayerInteractZone : MonoBehaviour {
     //private bool hasDeactivatedOrderedButtons = false;
     //private bool hasActivatedOneOrderedButton = false;
     //private bool hasActivatedClickButton = false; //probably can't handle all the click buttons at the same time
-    private bool hasPickedUp = false;
-    private bool toBeDestroyed = false;
-
     private void Update() {
         if (this.interactablesInRange.Count > 0) {
             //Debug.Log("Interactable in reach");
@@ -54,28 +51,14 @@ public class PlayerInteractZone : MonoBehaviour {
                 activeGameObject = false;
             }*/
 
-            if (this.hasPickedUp)
-            {
-                this.hasPickedUp = false;
-                activeGameObject = false;
-                this.toBeDestroyed = true;
-            }
-
-            if (latestGameObject == null)
+            if (latestGameObject == null || !latestGameObject.activeInHierarchy)
             {
                 activeGameObject = false;
-                this.toBeDestroyed = true;
             }
 
             if (!activeGameObject)
             {
                 this.interactablesInRange.RemoveAt(this.interactablesInRange.Count - 1);
-                if (this.toBeDestroyed)
-                {
-                    //Debug.Log(this.interactablesInRange.Count);
-                    Destroy(latestGameObject);
-                }
-
                 if (this.interactablesInRange.Count != 0)
                 {
                     latestGameObject = this.interactablesInRange[^1];
@@ -143,7 +126,9 @@ public class PlayerInteractZone : MonoBehaviour {
                 this.ShowInteractPrompt(interactable);
             */
 
-            this.interactablesInRange.Add(other.gameObject);
+            if (!this.interactablesInRange.Contains(other.gameObject)) {
+                this.interactablesInRange.Add(other.gameObject);
+            }
         }
     }
 
@@ -221,7 +206,11 @@ public class PlayerInteractZone : MonoBehaviour {
 
     //public void ActivatedClickButton() { this.hasActivatedClickButton = true; }
 
-    public void PickedUpInteractable() { this.hasPickedUp = true; }
+    /// <summary>Immediately removes the picked-up object from the interaction targets.</summary>
+    public void PickedUpInteractable(GameObject pickedUp) { this.interactablesInRange.Remove(pickedUp); }
+
+    /// <summary>Clears interaction targets after the player is repositioned.</summary>
+    public void ClearInteractables() { this.interactablesInRange.Clear(); }
 
     //public void DestroyLatestInteractable() { this.hasActivatedOrderedButtons = true; }
 
@@ -244,6 +233,7 @@ public class PlayerInteractZone : MonoBehaviour {
     //code needs to be added to check if the buttons are activated!!!!
     public Interactable GetFirstInteractable()
     {
+        this.RemoveUnavailableInteractables();
         if (interactablesInRange.Count > 0)
             return this.interactablesInRange[0].GetComponent<Interactable>();
         return null;
@@ -252,6 +242,7 @@ public class PlayerInteractZone : MonoBehaviour {
     //code needs to be added to check if the buttons are activated!!!!
     public Interactable GetLastInteractable()
     {
+        this.RemoveUnavailableInteractables();
         if (interactablesInRange.Count > 0)
             return this.interactablesInRange[^1].GetComponent<Interactable>();
         return null;
@@ -267,6 +258,11 @@ public class PlayerInteractZone : MonoBehaviour {
     public SO_InteractableData GetLastInteractableData()
     {
         return this.GetLastInteractable().GetInteractableData();
+    }
+
+    private void RemoveUnavailableInteractables() {
+        this.interactablesInRange.RemoveAll(interactable =>
+            interactable == null || !interactable.activeInHierarchy);
     }
 }
 

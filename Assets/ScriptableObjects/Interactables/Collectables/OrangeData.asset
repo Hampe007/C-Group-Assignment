@@ -15,3 +15,4 @@ MonoBehaviour:
   interactableID: 2
   collectableName: Orange
   collectableValue: 67
+  collectablePrefab: {fileID: 7580625740526202600, guid: 9a2b7c837e32f994c8c7ac58caea44d6, type: 3}
