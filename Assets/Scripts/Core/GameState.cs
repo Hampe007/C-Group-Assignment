@@ -142,8 +142,8 @@ public class GameState : Singleton<GameState>
 
     private void OnDisable()
     {
-        pause.action.performed -= OnPause;
-        pause.action.Disable();
+        // pause.action.performed -= OnPause;
+        // pause.action.Disable();
 
         StopTimer();
     }
