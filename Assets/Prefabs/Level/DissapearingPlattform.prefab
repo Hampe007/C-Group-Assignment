@@ -253,5 +253,5 @@ MonoBehaviour:
   Timer1: 4
   Timer2: -1
   StartOff: 0
-  MaterialOff: {fileID: 2100000, guid: b03354aec8ee86c468e218ad7f9908de, type: 2}
+  MaterialOff: {fileID: 2100000, guid: 5d88d352a20bced4a9d4f4bd98ab33e1, type: 2}
   Player: {fileID: 0}
