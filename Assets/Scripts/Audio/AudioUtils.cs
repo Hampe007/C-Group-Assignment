@@ -27,5 +27,4 @@ public static class AudioUtils
         float linear = Mathf.Pow(10f, db / 20f);
         return linear * 100f;
     }
-
 }

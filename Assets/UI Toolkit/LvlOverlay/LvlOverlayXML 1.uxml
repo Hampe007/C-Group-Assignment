@@ -1,9 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="ControlsMenu" src="project://database/Assets/UI%20Toolkit/ControlsMenu.uxml?fileID=9197481963319205126&amp;guid=f8eb477f795bdfe4081c1307db02998c&amp;type=3#ControlsMenu"/>
     <ui:Template name="SoundOptionsContainer" src="project://database/Assets/UI%20Toolkit/SoundOptionsMenu.uxml?fileID=9197481963319205126&amp;guid=420bed29f3ede8247b7af9fd00f02169&amp;type=3#SoundOptionsMenu"/>
     <Style src="project://database/Assets/UI%20Toolkit/UIStyle.uss?fileID=7433441132597879392&amp;guid=ade595b3343210b4186d64ecb9c8b9b6&amp;type=3#UIStyle"/>
     <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; align-content: flex-start; justify-content: flex-end;">
-        <ui:VisualElement name="StatsContainer" style="position: relative; flex-direction: row; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; align-items: flex-end;">
-            <ui:VisualElement name="ItemsLeftElement" class="scoreRegular" style="flex-grow: 0; background-image: none; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/False.ttf?fileID=12800000&amp;guid=07ea2196493900746a0f2368ed4d182b&amp;type=3#False&quot;); background-position-x: right 10px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); transition-property: top, left; transition-duration: 1s, 1s; transition-timing-function: ease, ease; transition-delay: 0s, 1s; font-size: 30px; flex-direction: row; height: 50px;">
+        <ui:VisualElement name="HintContainer" style="flex-direction: row; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; align-items: flex-end; right: 0%; position: absolute;">
+            <ui:VisualElement name="Container" class="scoreText" style="flex-grow: 1; padding-left: 20px; padding-right: 20px; height: 100%; padding-top: 3px;">
+                <ui:Label text="Pause (P)" name="ItemsLeftLabel"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="StatsContainer" style="position: relative; flex-direction: row; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; align-items: flex-end; right: 0%;">
+            <ui:VisualElement name="ItemsLeftElement" class="scoreRegular" style="flex-grow: 0; background-image: none; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/False.ttf?fileID=12800000&amp;guid=07ea2196493900746a0f2368ed4d182b&amp;type=3#False&quot;); background-position-x: right 10px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); transition-property: top, left; transition-duration: 1s, 1s; transition-timing-function: ease, ease; transition-delay: 0s, 1s; font-size: 30px; flex-direction: row; height: 50px; display: none;">
                 <ui:VisualElement name="ItemsLeftTextContainer" class="scoreText" style="flex-grow: 1; padding-left: 20px; padding-right: 20px; height: 100%; padding-top: 3px;">
                     <ui:Label text="Items left" name="ItemsLeftLabel"/>
                 </ui:VisualElement>
@@ -15,12 +21,12 @@
                 <ui:VisualElement name="ScoreTextContainer" class="scoreText" style="flex-grow: 1; padding-left: 20px; padding-right: 20px; height: 100%; padding-top: 3px;">
                     <ui:Label text="SCORE" name="ScoreLabel"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="PointsTextContainer" class="pointsText" style="flex-grow: 1; width: 100px; height: 100%;">
+                <ui:VisualElement name="PointsTextContainer" class="pointsText" style="flex-grow: 1; width: 50px; height: 100%;">
                     <ui:Label text="0" name="PointsLabel"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="TimerElement" class="timerEmphasized" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Textures/painted_circle.png?fileID=2800000&amp;guid=4fb4e6af81766bb49be2c57140645bd7&amp;type=3#painted_circle&quot;); align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/DigitalNumbers-Regular.ttf?fileID=12800000&amp;guid=2ce092f12c6e24f43a4b04ca071e648c&amp;type=3#DigitalNumbers-Regular&quot;); background-position-x: right 15px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); aspect-ratio: 1; top: auto; font-size: 40px; left: 16px; position: absolute; bottom: 16px;">
+        <ui:VisualElement name="TimerElement" class="timerRegular" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Textures/painted_circle.png?fileID=2800000&amp;guid=4fb4e6af81766bb49be2c57140645bd7&amp;type=3#painted_circle&quot;); align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/Models/UI/Fonts/DigitalNumbers-Regular.ttf?fileID=12800000&amp;guid=2ce092f12c6e24f43a4b04ca071e648c&amp;type=3#DigitalNumbers-Regular&quot;); background-position-x: right 15px; background-size: 91% 91%; -unity-background-image-tint-color: rgb(170, 67, 67); aspect-ratio: 1; top: auto; font-size: 35px; left: 16px; position: absolute; bottom: 16px;">
             <ui:Label text="00:00" name="TimerLabel"/>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -45,18 +51,20 @@
     </ui:VisualElement>
     <ui:VisualElement name="GamePausedOverlay" class="overlay" style="visibility: hidden; transition-duration: 0.125s; display: flex;">
         <ui:VisualElement name="MainContainer" style="flex-grow: 1; width: 100%; position: relative; height: 100%;">
-            <ui:VisualElement name="UpperContainer" style="justify-content: flex-end;">
+            <ui:VisualElement name="UpperContainer" style="justify-content: flex-end; height: 45%;">
                 <ui:Label text="— PAUSED —" class="largeTextLabel"/>
             </ui:VisualElement>
-            <ui:VisualElement name="LowerContainer">
+            <ui:VisualElement name="LowerContainer" style="height: 55%;">
                 <ui:VisualElement name="ButtonContainer">
                     <ui:Button text="RESUME" name="ResumeButton"/>
                     <ui:Button text="RETRY" name="RetryButton"/>
+                    <ui:Button text="Controls" name="ControlsMenuButton"/>
                     <ui:Button text="Options" name="SoundOptionsButton"/>
                     <ui:Button text="QUIT" name="QuitButton"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Instance template="ControlsMenu" name="ControlsMenuContainer" style="height: 100%; position: absolute; top: 0; right: 0; bottom: 0; left: 0; visibility: hidden;"/>
         <ui:Instance template="SoundOptionsContainer" name="SoundOptionsContainer" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; visibility: hidden;"/>
     </ui:VisualElement>
 </ui:UXML>

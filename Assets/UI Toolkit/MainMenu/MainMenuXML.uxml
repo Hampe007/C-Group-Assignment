@@ -23,9 +23,9 @@
             <ui:Label text="Credits" name="Label" class="largeTextLabel"/>
         </ui:VisualElement>
         <ui:VisualElement name="LowerContainer" style="flex-grow: 1; height: 75%; width: 100%;">
-            <ui:VisualElement name="TextContainer" style="flex-grow: 0; align-self: center; -unity-text-align: upper-center; font-size: 35px; justify-content: flex-start; padding-bottom: 2.5%;">
-                <ui:Label text="Developers" name="DevelopersLabel" style="color: rgb(255, 255, 255); font-size: 45px; padding-bottom: 14px;"/>
-                <ui:VisualElement name="DevelopersContainer" style="flex-grow: 0; padding-bottom: 40px; font-size: 40px;">
+            <ui:VisualElement name="TextContainer" style="flex-grow: 0; align-self: center; -unity-text-align: upper-center; font-size: 30px; justify-content: flex-start; padding-bottom: 2.5%;">
+                <ui:Label text="Developers" name="DevelopersLabel" style="color: rgb(255, 255, 255); font-size: 40px; padding-bottom: 14px;"/>
+                <ui:VisualElement name="DevelopersContainer" style="flex-grow: 0; padding-bottom: 40px; font-size: 35px;">
                     <ui:Label text="Amanda" name="AmandaLabel"/>
                     <ui:Label text="Cristian&#10;" name="CristianLabel"/>
                     <ui:Label text="Ellie" name="EllieLabel"/>
@@ -34,8 +34,8 @@
                     <ui:Label text="Noa" name="NoaLabel"/>
                     <ui:Label text="Sebastian" name="SebastianLabel"/>
                 </ui:VisualElement>
-                <ui:Label text="Assets&#10;" name="AssetsLabel" style="color: rgb(255, 255, 255); font-size: 45px; padding-bottom: 14px;"/>
-                <ui:VisualElement name="AssetsContainer" style="flex-grow: 0; flex-direction: row; font-size: 30px;">
+                <ui:Label text="Assets&#10;" name="AssetsLabel" style="color: rgb(255, 255, 255); font-size: 40px; padding-bottom: 14px;"/>
+                <ui:VisualElement name="AssetsContainer" style="flex-grow: 0; flex-direction: row; font-size: 25px;">
                     <ui:VisualElement name="MusicContainer" style="flex-grow: 1; margin-right: 60px; -unity-text-align: upper-left;">
                         <ui:Label text="Music from #Uppbeat (free for Creators!):&#10;" name="MusicLabel"/>
                         <ui:VisualElement name="LabelContainer" style="flex-grow: 1;">
