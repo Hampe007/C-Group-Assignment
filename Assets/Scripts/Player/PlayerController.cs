@@ -63,8 +63,6 @@ public class PlayerController : MonoBehaviour {
         isRunning = run.action.phase == InputActionPhase.Performed;
         isSliding = slide.action.phase == InputActionPhase.Performed;
 
-        //Debug.Log($"moveInput: {moveInput}, isRunning: {isRunning}, isSliding: {isSliding}");
-
         // Pass continuous state down
         movement.SetInputValues(moveInput, isRunning, isSliding);
         cameraLook.SetLookInput(lookInput);

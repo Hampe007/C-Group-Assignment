@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum InteractionState : byte {
     OFF = 0,
     ON = 1,

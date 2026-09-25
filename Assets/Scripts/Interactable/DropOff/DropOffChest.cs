@@ -1,20 +1,18 @@
 using UnityEngine;
 
-// Handles deposit availability, feedback, and scoring for the chest.
+/// <summary>
+/// Handles deposit availability, feedback, and scoring for the chest.
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class DropOffChest : Interactable
 {
     [Header("Interaction")]
     [SerializeField] private GameObject interactionPrompt;
-
     [Header("Chest")]
     [SerializeField] private DropOffChestAnimator chestAnimator;
     [SerializeField] private DropOffFeedback feedback;
-    
     private bool playerInRange;
-
     private bool HasItemToDropOff() => Inventory.Instance != null && Inventory.Instance.GetLastCollectable() != null;
-
     private bool ShouldShowPrompt() => playerInRange && HasItemToDropOff();
 
     protected override void OnEnable()
@@ -68,13 +66,8 @@ public class DropOffChest : Interactable
         }
 
         // Remove the newest item first so it cannot be deposited twice.
-        //SO_InteractableCollectableData droppedItem = Inventory.Instance.RemoveAndGetLastCollectable();
         int sum = Inventory.Instance.RemoveAllAndGetAllValues();
         
-        /*if (droppedItem == null)
-        {
-            return data;
-        }*/
         if (sum < 0) {
             return data;
         }
@@ -82,7 +75,6 @@ public class DropOffChest : Interactable
         if (GameState.Instance != null)
         {
             // Award the value stored on the deposited collectable.
-            //GameState.Instance.AddPlayerScore(droppedItem.GetCollectableValue());
             GameState.Instance.AddPlayerScore((uint)sum);
         }
 

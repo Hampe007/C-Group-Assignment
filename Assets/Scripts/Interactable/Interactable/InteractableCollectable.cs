@@ -1,6 +1,8 @@
 using UnityEngine;
 
-/// <summary>Represents a world collectable that can be hidden in the inventory and restored later.</summary>
+/// <summary>
+/// Represents a world collectable that can be hidden in the inventory and restored later.
+/// </summary>
 public class InteractableCollectable : Interactable
 {
 
@@ -24,7 +26,6 @@ public class InteractableCollectable : Interactable
     protected override void Start()
     {
         base.Start();
-		//Debug.Log($"ID {GetID()}");
     }
 
     public override SO_InteractableData Interact() { return this.data; }

@@ -1,8 +1,6 @@
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour, IInteractable {
-    //[SerializeField] protected GameObject go;
-    //[SerializeField] protected IInteractableData data;
     [SerializeField] protected SO_InteractableData data;
     [SerializeField] protected InteractionState state = InteractionState.ON;
 
@@ -10,7 +8,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable {
 
     protected virtual void Start() {
         // Initialize the ID from the database - Must be called in Start() to ensure the database is loaded
-        //this.InitializeIDFromDatabase();
+        // this.InitializeIDFromDatabase();
     }
 
     public virtual SO_InteractableData Interact() { return this.data; }
