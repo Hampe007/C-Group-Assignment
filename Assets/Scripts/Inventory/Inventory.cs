@@ -1,19 +1,7 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    /*private static Inventory _instance;
-    private static Inventory Instance {
-        get {
-            if (_instance == null) { _instance = FindFirstObjectByType<Inventory>(); }
-
-            return _instance;
-        }
-    }*/
-
     public static Inventory Instance { get; private set; }
 
     [SerializeField] private CarriedCollectableList collectables = new();
@@ -191,6 +179,29 @@ public class Inventory : MonoBehaviour
             }
         }
         return null;
+    }
+    
+    public CarriedCollectableList RemoveAllAndGetCollectables() {
+        if (this.collectables.Count > 0) {
+            CarriedCollectableList removedCollectables = collectables;
+            collectables.RemoveAll();
+            return removedCollectables;
+        }
+        
+        return null;
+    }
+    
+    public int RemoveAllAndGetAllValues() {
+        if (this.collectables.Count > 0) {
+            int sum = 0;
+            foreach (SO_InteractableCollectableData data in collectables) {
+                sum += (int)data.GetCollectableValue();
+            }
+            collectables.RemoveAll();
+            return sum;
+        }
+        
+        return -1;
     }
 
     /// <summary>Restores every carried instance to its pickup position and empties the inventory.</summary>

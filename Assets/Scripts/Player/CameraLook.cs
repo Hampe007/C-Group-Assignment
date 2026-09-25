@@ -1,5 +1,4 @@
 using UnityEngine;
-//using UnityEngine.InputSystem;
 
 public class CameraLook : MonoBehaviour {
     Camera cameraComponent;
@@ -20,7 +19,6 @@ public class CameraLook : MonoBehaviour {
 
     void Start() {
         cameraComponent = GetComponent<Camera>();
-        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetLookInput(Vector2 input) { lookInput = input; }
@@ -42,11 +40,5 @@ public class CameraLook : MonoBehaviour {
         Vector3 rotationDelta = new Vector3(0, lookY, 0);
         Quaternion newRotation = playerRB.rotation * Quaternion.Euler(rotationDelta);
         playerRB.MoveRotation(newRotation);
-
-        // Camera Field of View based on velocity
-        /*if (playerRB != null) {
-            Vector3 flatVelocity = new Vector3(playerRB.linearVelocity.x, 0, playerRB.linearVelocity.z);
-            cameraComponent.fieldOfView = 60 + flatVelocity.magnitude;
-        }*/
     }
 }

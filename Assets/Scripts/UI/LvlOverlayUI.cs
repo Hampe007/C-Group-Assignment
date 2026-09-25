@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 // TODO: remove all testing-related code
-
 static class TimerClasses {
     public static string Emphasized => "timerEmphasized";
     public static string Regular => "timerRegular";
