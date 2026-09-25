@@ -15,4 +15,4 @@ MonoBehaviour:
   interactableID: 3
   collectableName: Item3
   collectableValue: 15
-  collectablePrefab: {fileID: 7580625740526202600, guid: 2f44985fd0a8ebe4dbb8ff0e3d292f96, type: 3}
+  collectablePrefab: {fileID: 7580625740526202600, guid: 025dd5bd930068c44b080fd56e48f33d, type: 3}
