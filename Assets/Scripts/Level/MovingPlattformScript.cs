@@ -45,6 +45,15 @@ public class MovingPlattformScript : MonoBehaviour
             else if (OneWay == true)
             {
                 yield return new WaitForSeconds(Wait2);
+
+                // Temporarily detach any player standing on the platform
+                foreach (Transform child in Plattform.transform)
+                {
+                    if (child.CompareTag("Player"))
+                        child.SetParent(null, true);
+                }
+
+                // Teleport platform back
                 Plattform.transform.position = Point1.transform.position;
             }
             yield return new WaitForSeconds(Wait);
