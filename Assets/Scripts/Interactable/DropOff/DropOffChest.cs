@@ -68,17 +68,22 @@ public class DropOffChest : Interactable
         }
 
         // Remove the newest item first so it cannot be deposited twice.
-        SO_InteractableCollectableData droppedItem = Inventory.Instance.RemoveAndGetLastCollectable();
-
-        if (droppedItem == null)
+        //SO_InteractableCollectableData droppedItem = Inventory.Instance.RemoveAndGetLastCollectable();
+        int sum = Inventory.Instance.RemoveAllAndGetAllValues();
+        
+        /*if (droppedItem == null)
         {
+            return data;
+        }*/
+        if (sum < 0) {
             return data;
         }
 
         if (GameState.Instance != null)
         {
             // Award the value stored on the deposited collectable.
-            GameState.Instance.AddPlayerScore(droppedItem.GetCollectableValue());
+            //GameState.Instance.AddPlayerScore(droppedItem.GetCollectableValue());
+            GameState.Instance.AddPlayerScore((uint)sum);
         }
 
         chestAnimator?.PlayDepositAnimation();

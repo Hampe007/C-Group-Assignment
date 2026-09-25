@@ -44,6 +44,13 @@ public class CarriedCollectableList : IEnumerable<SO_InteractableCollectableData
         return false;
     }
 
+    public void RemoveAll() {
+        int numOfItems = items.Count;
+        for (int i = 0; i < numOfItems; i++) {
+            RemoveAt(0);
+        }
+    }
+
     public void RestoreAll()
     {
         // Used when the player dies: reactivate every carried instance at its recorded pickup position.

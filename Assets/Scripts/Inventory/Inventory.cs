@@ -192,6 +192,29 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+    
+    public CarriedCollectableList RemoveAllAndGetCollectables() {
+        if (this.collectables.Count > 0) {
+            CarriedCollectableList removedCollectables = collectables;
+            collectables.RemoveAll();
+            return removedCollectables;
+        }
+        
+        return null;
+    }
+    
+    public int RemoveAllAndGetAllValues() {
+        if (this.collectables.Count > 0) {
+            int sum = 0;
+            foreach (SO_InteractableCollectableData data in collectables) {
+                sum += (int)data.GetCollectableValue();
+            }
+            collectables.RemoveAll();
+            return sum;
+        }
+        
+        return -1;
+    }
 
     /// <summary>Restores every carried instance to its pickup position and empties the inventory.</summary>
     public void RestoreAllCollectables() { this.collectables.RestoreAll(); }
