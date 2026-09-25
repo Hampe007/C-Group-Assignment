@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerState
@@ -75,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         airJumps = maxAirJumps;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Called continuously by PlayerController to update movement inputs.
@@ -83,8 +81,6 @@ public class PlayerMovement : MonoBehaviour
         moveInput = inputVector;
         isRunPressed = running;
         isSlidePressed = sliding;
-
-        //Debug.Log($"moveInput: {moveInput}, isRunning: {isRunPressed}, isSliding: {isSlidePressed}");
     }
  
     public void TriggerJump()
@@ -176,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isGrounded)
         {
-            //Debug.Log("GROUNDED");
             if (isSlidePressed)
             {
                 currentState = PlayerState.SLIDING;

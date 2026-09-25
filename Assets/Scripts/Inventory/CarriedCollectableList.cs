@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 /// <summary>
 /// Stores world collectable instances rather than only their data, so they can return to their original positions.
 /// </summary>
+[Serializable]
 public class CarriedCollectableList : IEnumerable<SO_InteractableCollectableData>
 {
     [SerializeField] private List<InteractableCollectable> items = new();

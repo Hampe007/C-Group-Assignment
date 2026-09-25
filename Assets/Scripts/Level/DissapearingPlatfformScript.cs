@@ -13,8 +13,6 @@ public class DissapearingPlatfformScript : MonoBehaviour
     [SerializeField] private GameObject Player;
     private bool IsOff = false;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         MaterialOn = Plattform.GetComponent<MeshRenderer>().material;

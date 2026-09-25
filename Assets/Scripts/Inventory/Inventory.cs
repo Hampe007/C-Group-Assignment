@@ -1,19 +1,7 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    /*private static Inventory _instance;
-    private static Inventory Instance {
-        get {
-            if (_instance == null) { _instance = FindFirstObjectByType<Inventory>(); }
-
-            return _instance;
-        }
-    }*/
-
     public static Inventory Instance { get; private set; }
 
     [SerializeField] private CarriedCollectableList collectables = new();

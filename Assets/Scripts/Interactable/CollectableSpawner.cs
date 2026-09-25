@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>Spawns each configured item type across the configured spawn points in a random order.</summary>
+/// <summary>
+/// Spawns each configured item type across the configured spawn points in a random order.
+/// </summary>
 public class CollectableSpawner : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints = new();

@@ -38,6 +38,7 @@ public class GameState : Singleton<GameState>
     public void StartGame()
     {
         SceneManager.LoadScene(GAME_SCENE);
+        SetCursorEnabled(false);
         Reset();
     }
 
@@ -60,6 +61,7 @@ public class GameState : Singleton<GameState>
     /// </summary>
     public void GameOver()
     {
+        SetCursorEnabled(true);
         Time.timeScale = 0f;
         this.isGameOver = true;
 
@@ -106,22 +108,16 @@ public class GameState : Singleton<GameState>
 
         if (this.isPaused)
         {
+            SetCursorEnabled(true);
             Time.timeScale = 0;
             GamePausedEvent.Invoke();
         }
         else
         {
+            SetCursorEnabled(false);
             Time.timeScale = 1;
             GameUnPausedEvent.Invoke();
         }
-
-        Debug.Log($"isPaused: {this.isPaused}, timeScale: {Time.timeScale}");
-        Debug.Log(this.isPaused ? "Game Paused" : "Game Resumed");
-
-        // Free the mouse for menus when paused, lock it back when playing
-        // Cursor.lockState = this.isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        // Cursor.visible = this.isPaused;
-        // Made private to prevent from being used in multiple places.
     }
 
     /// <summary>
@@ -129,7 +125,7 @@ public class GameState : Singleton<GameState>
     /// </summary>
     public bool IsPlayerInControl()
     {
-        return (this.isPlaying && !(this.isGameOver || this.isPaused));
+        return this.isPlaying && !(this.isGameOver || this.isPaused);
     }
 
     /* MONOBEHAVIOR LIFECYCLE METHODS */
@@ -142,9 +138,6 @@ public class GameState : Singleton<GameState>
 
     private void OnDisable()
     {
-        // pause.action.performed -= OnPause;
-        // pause.action.Disable();
-
         StopTimer();
     }
 
@@ -155,15 +148,14 @@ public class GameState : Singleton<GameState>
 
     /* OTHER PRIVATE METHODS */
 
-    private void EndGame()
+    /// <summary>
+    /// Free the mouse for menus when enabled, lock it back when disabled.
+    /// </summary>
+    /// <param name="enabled"></param>
+    private void SetCursorEnabled(bool enabled)
     {
-        Time.timeScale = 0f;
-        this.isPlaying = false;
-
-        StopTimer();
-
-        // Should probably either return to main menu or quit the application.
-        // Replace with something akin to QuitToMain() (which could set isPlaying false) and Application.Quit();
+        Cursor.lockState = enabled ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = enabled;
     }
 
     private void RestartTimer()
